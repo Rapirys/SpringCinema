@@ -1,6 +1,6 @@
-package com.example.luxuryhotel.repository;
+package com.example.cinema.repository;
 
-import com.example.luxuryhotel.entities.User;
+import com.example.cinema.entities.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

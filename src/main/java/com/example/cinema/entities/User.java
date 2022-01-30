@@ -1,4 +1,4 @@
-package com.example.luxuryhotel.entities;
+package com.example.cinema.entities;
 
 
 import javax.persistence.*;

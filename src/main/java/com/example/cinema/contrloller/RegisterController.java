@@ -1,8 +1,8 @@
-package com.example.luxuryhotel.contrloller;
+package com.example.cinema.contrloller;
 
-import com.example.luxuryhotel.entities.Role;
-import com.example.luxuryhotel.entities.User;
-import com.example.luxuryhotel.repository.UserRepository;
+import com.example.cinema.entities.Role;
+import com.example.cinema.entities.User;
+import com.example.cinema.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

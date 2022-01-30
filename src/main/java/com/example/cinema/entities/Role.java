@@ -1,4 +1,4 @@
-package com.example.luxuryhotel.entities;
+package com.example.cinema.entities;
 
 public enum Role {
     USER,
