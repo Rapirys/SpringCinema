@@ -1,36 +1,28 @@
 package com.example.cinema.contrloller;
 
 
-import com.example.cinema.entities.User;
-import com.example.cinema.repository.UserRepository;
+import com.example.cinema.config.entities.User;
+import com.example.cinema.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/")
+    @GetMapping()
     public String greeting(Model model) {
         Iterable<User> users = userRepository.findAll();
         model.addAttribute("users",users);
-        return "greeting";
+        return "main";
     }
 
-    @PostMapping("/adduser")
-    public String add(@RequestParam(name="username", required=false, defaultValue="World") String username,
-                      @RequestParam(name="email", required=false, defaultValue="Fdsf") String email,
-                      Model model){
-        User hotelUser = new User(username,email);
-        userRepository.save(hotelUser);
-        Iterable<User> users = userRepository.findAll();
-        model.addAttribute("users",users);
-        return "account";
+    @GetMapping("/command/lang")
+    public void lang(Model model) {
+        System.out.println(11111);
     }
 
 }

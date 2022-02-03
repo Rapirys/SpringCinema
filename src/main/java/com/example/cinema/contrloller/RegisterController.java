@@ -1,8 +1,9 @@
 package com.example.cinema.contrloller;
 
-import com.example.cinema.entities.Role;
-import com.example.cinema.entities.User;
-import com.example.cinema.repository.UserRepository;
+import com.example.cinema.config.entities.Role;
+import com.example.cinema.config.entities.User;
+import com.example.cinema.model.repository.UserRepository;
+import com.example.cinema.model.service.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,14 +12,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
+
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private Validator valid;
 
     @GetMapping
     public String register (){
@@ -27,9 +32,9 @@ public class RegisterController {
 
     @PostMapping
     public String addUser (User user, Model model){
-        User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
-        if (userFromDb != null) {
-            model.addAttribute("message", "user with such username or email already exist");
+        List<String> s=valid.validUserFields(user);
+        if (s.size()!=0) {
+            model.addAttribute("message",s);
             return "register";
         }
         Set<Role> roles= new HashSet<>();
@@ -37,7 +42,6 @@ public class RegisterController {
         user.setActive(true);
         user.setRoles(roles);
         userRepository.save(user);
-
         return "redirect:/login";
     }
 }

@@ -1,4 +1,4 @@
-package com.example.cinema.entities;
+package com.example.cinema.config.entities;
 
 
 import javax.persistence.*;
