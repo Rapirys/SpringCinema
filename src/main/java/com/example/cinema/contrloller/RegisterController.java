@@ -5,6 +5,7 @@ import com.example.cinema.config.entities.User;
 import com.example.cinema.model.repository.UserRepository;
 import com.example.cinema.model.service.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,9 @@ public class RegisterController {
     @Autowired
     private Validator valid;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping
     public String register (){
         return "register";
@@ -41,6 +45,7 @@ public class RegisterController {
         roles.add (Role.USER);
         user.setActive(true);
         user.setRoles(roles);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "redirect:/login";
     }
