@@ -16,7 +16,7 @@ public class Validator {
     private UserRepository userRepository;
 
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
-    public static final Pattern PASSWORD_REGEX = Pattern.compile("^[a-zA-Z][a-zA-Z0-9-_\\.]{6,20}$");
+    public static final Pattern PASSWORD_REGEX = Pattern.compile("^[A-Za-z0-9]{6,40}");//"^[a-zA-Z][a-zA-Z0-9-_\\.]{6,20}$");
 
 
     public boolean email(String s){
@@ -31,13 +31,13 @@ public class Validator {
         User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
 
         if (!email(user.getEmail()))
-            s.add("Incorrect email:"+ user.getEmail());
+            s.add("Incorrect_email");
         if (!username(user.getUsername()))
-            s.add("Username too short or too long");
+            s.add("Username_too_short_or_too_long");
         if (!password(user.getPassword()))
-            s.add("The password must consist of Latin letters and numbers and be at least 6 characters long. \n");
+            s.add("Password_problem");
         if (userFromDb != null) {
-            s.add("User with such username or email already exist \n");
+            s.add("User_already_exist");
         }
 
         System.out.println(s.toString()+" "+1324);
