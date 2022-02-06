@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.apache.logging.log4j.Logger;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.Set;
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
-    static final Logger logger = LogManager.getLogger(RegisterController.class);
+
 
 
     @Autowired
@@ -43,11 +43,11 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String addUser (User user, Model model){
+    public String addUser (User user, RedirectAttributes redirectAttributes){
         List<String> s=valid.validUserFields(user);
         if (s.size()!=0) {
-            model.addAttribute("message",s);
-            return "register";
+            redirectAttributes.addFlashAttribute("message",s);
+            return "redirect:/register";
         }
         Set<Role> roles= new HashSet<>();
         roles.add (Role.USER);
@@ -55,7 +55,6 @@ public class RegisterController {
         user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        logger.trace(user.getUsername()+"register.");
         return "redirect:/login";
     }
 

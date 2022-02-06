@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Place</title>
+</head>
+<body>
+<header class="header">
+    <a href="logout"><img class="hbtn" src="../static/img/logout.png"></a>
+    <div class="lang_buttons">
+        <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
+    </div>
+    <script>
+        function swap_len(){$.get('/command/lang',function (data){location.reload()})}
+    </script>
+</header>
+   <p th:text="${title}" />
+</body>
+</html>

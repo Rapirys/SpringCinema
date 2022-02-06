@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+
       lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,16 +15,17 @@
 </head>
 <body>
 
-<header class="header">
-    <div class="lang_buttons">
-        <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
-        <script>
-            function swap_len(){$.get('/command/lang',function (data){location.reload()})}
-        </script>
-    </div>
-</header>
+
 
 <div class="sidenav">
+    <header class="header">
+        <div class="lang_buttons">
+            <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
+            <script>
+                function swap_len(){$.get('/command/lang',function (data){location.reload()})}
+            </script>
+        </div>
+    </header>
     <div class="login-main-text">
         <h2  th:text="#{Cinema}">Cinema</h2>
         <h2  th:text="#{Login_Page}">Login Page</h2>
