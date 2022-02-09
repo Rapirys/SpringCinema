@@ -1,14 +1,12 @@
 package com.example.cinema.contrloller;
 
-import com.example.cinema.config.entities.Role;
-import com.example.cinema.config.entities.User;
+import com.example.cinema.entities.Role;
+import com.example.cinema.entities.User;
 import com.example.cinema.model.repository.UserRepository;
 import com.example.cinema.model.service.Validator;
 
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,10 +49,15 @@ public class RegisterController {
         }
         Set<Role> roles= new HashSet<>();
         roles.add (Role.USER);
-        user.setActive(true);
         user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        } catch (Exception e){
+            s.add("User_already_exist");
+            redirectAttributes.addFlashAttribute("message",s);
+            return "redirect:/register";
+        }
         return "redirect:/login";
     }
 

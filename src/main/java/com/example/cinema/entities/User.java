@@ -1,5 +1,7 @@
-package com.example.cinema.config.entities;
+package com.example.cinema.entities;
 
+
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,10 +11,11 @@ public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
+    @Column (unique = true)
     private String username;
     @Column (unique = true)
     private String email;
-    private boolean active;
+    private boolean active=true;
     String password;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

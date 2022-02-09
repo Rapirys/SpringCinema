@@ -1,16 +1,19 @@
 package com.example.cinema;
 
+import com.example.cinema.model.repository.FilmRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
-import java.util.Locale;
+import java.time.Duration;
+import java.time.LocalTime;
+
 
 @SpringBootApplication
 public class SpringCinemaApplication {
+
     public static void main(String[] args) {
+
         SpringApplication.run(SpringCinemaApplication.class, args);
     }
 

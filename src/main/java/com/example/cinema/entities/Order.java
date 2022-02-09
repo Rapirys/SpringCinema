@@ -1,4 +1,4 @@
-package com.example.cinema.config.entities;
+package com.example.cinema.entities;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

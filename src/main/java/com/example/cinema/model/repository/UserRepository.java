@@ -1,6 +1,6 @@
 package com.example.cinema.model.repository;
 
-import com.example.cinema.config.entities.User;
+import com.example.cinema.entities.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Cinema</title>
     <meta charset="utf-8">
@@ -16,9 +17,9 @@
         <a href="login"><img class="hbtn" src="../static/img/login.png"></a>
     </div>
     <div sec:authorize="isAuthenticated()">
-        <a href="logout"><img class="hbtn" src="../static/img/logout.png"></a>
+        <form  th:action="@{/logout}" method="post"> <input type="image" img class="hbtn"  src="../static/img/logout.png"> </form>
     </div>
-    <input type="image" onclick="show_menu()" class="hbtn" src="../static/img/menu.png" alt="menu">
+    <input  type="image" onclick="show_menu()" class="hbtn" src="../static/img/menu.png" alt="menu">
     <div class="lang_buttons">
         <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
     </div>
@@ -54,7 +55,6 @@
                <label>Длительность</label>
            </div>
            <div class="date">
-
                <input name = date1 type="date" th:value="${#temporals.format(localDate, 'yyyy-MM-dd')}"  th:min="${#temporals.format(localDate, 'yyyy-MM-dd')}">
                <input name = date2 type="date" th:value="${#temporals.format(localDate, 'yyyy-MM-dd')}"  th:min="${#temporals.format(localDate, 'yyyy-MM-dd')}">
            </div>

@@ -1,12 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+    <link rel="stylesheet" href="../static/css/header.css">
+<!--    <link rel="stylesheet" href="../static/css/main.css">-->
+
     <meta charset="UTF-8">
     <title>Place</title>
+    <style>
+        .place{
+            display: inline-block;
+        }
+        .hall {
+            position: absolute;
+            top: 55%;
+            /*background-color: #F15B42;*/
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%)
+        }
+        .place_free{
+            border: 2px solid rgb(7, 160, 236);
+            height: 2.25rem;
+            width: 1.5rem;
+            border-radius: 4px;
+        }
+        .place_white{
+            height: 2.25rem;
+            width: 1.5rem;
+        }
+
+    </style>
 </head>
 <body>
 <header class="header">
-    <a href="logout"><img class="hbtn" src="../static/img/logout.png"></a>
+    <form  th:action="@{/logout}" method="post"> <input type="image" img class="hbtn"  src="../static/img/logout.png"> </form>
     <div class="lang_buttons">
         <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
     </div>
@@ -15,5 +43,33 @@
     </script>
 </header>
    <p th:text="${title}" />
+   <p th:text="${duration}"/>
+<div class="hall">
+    <th:block th:each="row,i : ${topology}">
+        <div class="row">
+            <th:block th:each="place,j : ${row}">
+                <div class="place" th:switch="${place}">
+                  <th:block th:case="'#'">
+                     <input type="checkbox" th:id="${i.index}+' '+${j.index}"  hidden/>
+                         <div class="place_free" onclick="choose(this)" th:id="${i.index}+' '+${j.index}" >
+                         </div>
+                  </th:block>
+                  <th:block th:case="'0'">
+                      <div class="place_white">
+                      </div>
+                  </th:block>
+                </div>
+            </th:block>
+        </div>
+    </th:block>
+    
+</div>
+<script>
+    function choose(el){
+        el.style.backgroundColor = 'yellow';
+        var check = document.getElementById(el.id);
+        if(check.checked){check.checked='hidden';}else {check.checked='visible';}
+    }
+</script>
 </body>
 </html>

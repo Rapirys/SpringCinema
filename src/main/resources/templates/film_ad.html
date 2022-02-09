@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Films</title>
+    <link rel="stylesheet" href="../static/css/table.css">
+    <link rel="stylesheet" href="../static/css/header.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</head>
+<body>
+
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h2>Film <b>Details</b></h2>
+                    </div>
+                    <div class="col-sm-8">
+                        <form  th:action="@{/logout}" method="post"> <input type="image" img class="hbtn"  src="../static/img/logout.png"> </form>
+                        <div class="lang_buttons">
+                            <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
+                        </div>
+                        <script>
+                            function swap_len(){$.get('/command/lang',function (data){location.reload()})}
+                        </script>
+<!--                        <a href="#" class="btn btn-primary"><i class="material-icons">&#xE863;</i> <span>Same button</span></a>-->
+                    </div>
+                </div>
+            </div>
+<!--            -->
+            <div class="table-filter">
+                <div class="row">
+                        <div class="col-sm-12">
+                            <form method="post" th:action="@{/admin/film/add}" th:object="${newFilm}" enctype="multipart/form-data">
+                            <button type="submit" class="btn btn-primary"><b>+</b></button>
+                            <div class="filter-group">
+                                <label th:text="#{Title}+'_'+#{en}">Title_en</label>
+                                <input type="text" class="form-control" name="title_en" required th:field="*{titleEn}">
+                            </div>
+                            <div class="filter-group">
+                                <label th:text="#{Title}+'_'+#{ru}">Title_ru</label>
+                                <input type="text" class="form-control" name="title_ru" required th:field="*{titleRu}">
+                            </div>
+
+                            <div class="filter-group">
+                                <label th:text="#{Duration}">Duration</label>
+                                <input type="time" class="form-control" name="duration" required th:field="*{duration}">
+                            </div>
+                                <div class="filter-group">
+                                    <label th:text="#{Load_Poster}">Load Poster</label>
+                                    <input type="file" accept="image/jpeg" name="image" required>
+                                </div>
+                            </form>
+                        </div>
+                </div>
+            </div>
+<!--            -->
+            <div class="table-filter">
+                <form id="filter" method="get" th:action="@{/admin/film}">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="show-entries">
+                            <span>Show</span>
+                            <select  name="quantity" class="form-control">
+                                <option th:each="i : ${#numbers.sequence(5,20,5)}" th:value="${i}" th:text="${i}"
+                                        th:selected="${i==quantity}"></option>
+                            </select>
+                            <span>entries</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        <div class="filter-group">
+                            <label>Search</label>
+                            <input name="search" type="text" class="form-control">
+                        </div>
+                        <div class="filter-group">
+                            <label th:text="#{Sorting}">Sorting</label>
+                            <select  name="sort" class="form-control">
+                                <option selected="selected" value="titleEn" th:text="#{Title}+' '+#{en}+'.'">En</option>
+                                <option value="titleRu" th:text="#{Title}+' '+#{ru}+'.'">Ru</option>
+                                <option value="duration" th:text="#{Duration}">Duration</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label th:text="#{Status}">Status</label>
+                            <select name="status" class="form-control">
+                                <option value="Any" th:text="#{Any}">Any</option>
+                                <option selected="selected" value="at_box_office" th:text="#{At_box_office}">At_box_office</option>
+                                <option value="archive" th:text="#{Archive}">Archive</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label th:text="#{Direction}">Direction</label>
+                            <select name="direction" class="form-control">
+                                <option value="true" th:text="#{Ascending}">ascending</option>
+                                <option selected="selected" value="false" th:text="#{Descending}">descending</option>
+                            </select>
+                        </div>
+                        <span class="filter-icon" ><i class="fa fa-filter"></i></span>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th th:text="#{Title}+' '+#{en}+'.'">Title_en</th>
+                    <th th:text="#{Title}+' '+#{ru}+'.'">Title_ru</th>
+                    <th th:text="#{Duration}">Duration</th>
+                    <th th:text="#{Status}">Status</th>
+                    <th th:text="#{Action}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="film,i: ${films}">
+                      <td th:text="${i.index + (page - 1)*quantity}"></td>
+                      <td th:text="${film.titleEn}">Title_en</td>
+                      <td th:text="${film.titleRu}">Title_ru</td>
+                      <td th:text="${film.getFormatDuration()}">Duration</td>
+
+                      <td>
+                          <th:block th:if="${film.boxOffice}" >
+                              <label class="status text-success" th:id ="${film.film_id}" th:onclick="'swap_status('+${film.getFilm_id()}+',true)'">&bull;</label>
+                              <label th:text="#{At_box_office}" th:onclick="'swap_status('+${film.getFilm_id()}+',true)'"/>
+                          </th:block>
+                          <th:block th:unless="${film.boxOffice}" >
+                              <label class="status text-danger" th:id ="${film.film_id}" th:onclick="'swap_status('+${film.getFilm_id()}+',false)'">&bull;</label>
+                              <label th:text="#{Archive}"  th:id ="${film.film_id}" th:onclick="'swap_status('+${film.getFilm_id()}+',false)'"/>
+                          </th:block>
+                      </td>
+                      <td>
+                          <a href="#" th:onclick="'delete_film('+${film.getFilm_id()}+')'" class="view" th:title="#{Delete}" data-toggle="tooltip">
+                              <i class="material-icons">delete</i>
+                          </a>
+                      </td>
+                  </tr>
+                </tbody>
+            </table>
+            <script>
+                function delete_film(id){$.get("/admin/film/delete?id="+id,function (data){location.reload()})}
+                function  swap_status(id,status){$.get("/admin/film/swap_status?id="+id+"&status="+status,function (data){location.reload()})}
+            </script>
+            <div class="clearfix">
+                <ul class="pagination" th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
+                    <li th:if="${page>1}" class="page-item disabled"><a th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page - 1).toUriString()}" th:text="#{Previous}">Previous</a></li>
+                    <li class="page-item active"><button href="#" class="page-link" th:text="${page}"></button></li>
+                    <li class="page-item disabled"><a th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page + 1).toUriString()}" th:text="#{Next}">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
