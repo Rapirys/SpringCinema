@@ -48,9 +48,8 @@ public class RegisterController {
             return "redirect:/register";
         }
         Set<Role> roles= new HashSet<>();
-        roles.add (Role.USER);
-        user.setRoles(roles);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        roles.add(Role.USER);
+        user.setRoles(roles).setPassword(passwordEncoder.encode(user.getPassword()));
         try {
             userRepository.save(user);
         } catch (Exception e){

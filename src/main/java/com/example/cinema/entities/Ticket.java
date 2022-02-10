@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tickets", indexes = @Index(name = "ticket_index", columnList = "order_id"))
+@Table(name = "tickets", indexes = @Index(name = "ticket_index", columnList = "order_id"),
+       uniqueConstraints = { @UniqueConstraint( columnNames = { "place", "row"} )})
 public class Ticket {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

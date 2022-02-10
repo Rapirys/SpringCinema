@@ -17,8 +17,7 @@ public interface FilmRepository extends CrudRepository<Film, Long> {
     public List<Film> findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeTrue(String search_ru, String search_en,Pageable pageable);
     public List<Film> findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeFalse(String search_ru, String search_en,Pageable pageable);
     public List<Film> findAllByTitleEnContainsOrTitleRuContains(String titleEn, String titleRu);
-
-
+    public List<Film> findByBoxOfficeTrueOrderByTitleEn();
     @Transactional
     @Modifying
     @Query("update Film f set f.boxOffice=?2 where f.film_id = ?1")

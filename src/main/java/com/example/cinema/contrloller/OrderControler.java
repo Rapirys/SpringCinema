@@ -25,18 +25,19 @@ public class OrderControler {
     @Autowired
     SessionRepository sessionRepository;
     @GetMapping("/place")
-    public String place(Model model, HttpServletRequest request,
-                        @RequestParam(name = "id") Long id){
+    public String place(Model model, HttpServletRequest request)
+//            ,@RequestParam(name = "id") Long id)
+    {
         Locale locale=localeResolver.resolveLocale(request);
-        Optional<Session> o= sessionRepository.findById(id);
-        Session session;
-        if (o.isPresent())
-            session = sessionRepository.findById(id).get();
-        else return "redirect:/main";
-        Film film =session.getFilm();
-        String title_for_model =(locale.getLanguage()=="en")?film.getTitleEn():film.getTitleRu();
-        model.addAttribute("title",title_for_model);
-        model.addAttribute("duration",film.getDuration().toString());
+//        Optional<Session> o= sessionRepository.findById(id);
+//        Session session;
+//        if (o.isPresent())
+//            session = sessionRepository.findById(id).get();
+//        else return "redirect:/main";
+//        Film film =session.getFilm();
+//        String title_for_model =(locale.getLanguage()=="en")?film.getTitleEn():film.getTitleRu();
+//        model.addAttribute("title",title_for_model);
+//        model.addAttribute("duration",film.getDuration().toString());
         model.addAttribute("topology", topology.get());
         return "place";
     }

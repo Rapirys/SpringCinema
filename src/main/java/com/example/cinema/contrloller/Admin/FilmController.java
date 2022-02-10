@@ -27,10 +27,12 @@ public class FilmController {
     private final static Logger logger = Logger.getLogger(FilmController.class);
     @Autowired
     SortManager sortManager;
+    @Autowired
+    FilmRepository filmRepository;
     @Value("${upload.path}")
     String path;
 
-    @GetMapping("")
+    @GetMapping
     public String film(@RequestParam(name = "search", defaultValue = "") String search,
                        @RequestParam(name ="sort", defaultValue = "titleEn") String sort,
                        @RequestParam(name = "status", defaultValue = "at_box_office") String status,
@@ -48,7 +50,7 @@ public class FilmController {
 
     @PostMapping("/add")
     public String film_add(@ModelAttribute("newFilm") Film newFilm, @RequestParam("image") MultipartFile file) {
-        newFilm=sortManager.save(newFilm);
+        newFilm=filmRepository.save(newFilm);
         try {
             file.transferTo(new File(path+newFilm.getFilm_id()+".jpeg"));
             logger.debug("Add new movie film_id:"+newFilm.getFilm_id());
@@ -61,7 +63,7 @@ public class FilmController {
 
     @GetMapping("/delete")
     public ResponseEntity<HttpStatus> delete_add(@RequestParam("id") Long id) {
-        sortManager.delete(id);
+        filmRepository.deleteById(id);
         if (new File(path+id+".jpeg").delete())
             logger.debug("Delete movie film_id:"+id);
         else logger.warn("Problem with delete poster for film_id:+newFilm.getFilm_id()");
@@ -69,8 +71,7 @@ public class FilmController {
     }
     @GetMapping("/swap_status")
     public ResponseEntity<HttpStatus> swap_status(@RequestParam("id") Long id, @RequestParam("status") boolean current) {
-        sortManager.swap_status(id, current);
-
+        filmRepository.update_status(id, current);
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
 

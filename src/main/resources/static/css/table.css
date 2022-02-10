@@ -5,6 +5,12 @@ body {
     font-family: 'Varela Round', sans-serif;
     font-size: 13px;
 }
+.error{
+    text-align: center;
+    font-size: 200%;
+    color: red;
+    font-family: bold;
+}
 .table-responsive {
     /*margin: 30px 0;*/
 }

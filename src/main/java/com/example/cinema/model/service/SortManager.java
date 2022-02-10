@@ -1,20 +1,27 @@
 package com.example.cinema.model.service;
 
 import com.example.cinema.entities.Film;
+import com.example.cinema.entities.Session;
 import com.example.cinema.model.repository.FilmRepository;
+import com.example.cinema.model.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class SortManager {
     @Autowired
     FilmRepository filmRepository;
-
+    @Autowired
+    SessionRepository sessionRepository;
 
     public List<Film> findFilms(String search, String sort, String status, int page, int quantity, String desc) {
         search=search;
@@ -30,15 +37,20 @@ public class SortManager {
              return filmRepository.findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeTrue(search,search, pageable);
         else return  filmRepository.findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeFalse(search,search, pageable);
     }
-
-    public Film save(Film newFilm) {
-        return filmRepository.save(newFilm);
+    public List<Film> findFilmsAtBoxOffice() {
+        return  filmRepository.findByBoxOfficeTrueOrderByTitleEn();
+    }
+    public List<Session> findSession(String search, String sort, String status, int page, int quantity, String direction) {
+        return sessionRepository.findAll();
     }
 
-    public void delete(Long id) {
-        filmRepository.deleteById(id);
-    }
-    public void swap_status(Long id, boolean current) {
-        filmRepository.update_status(id,!current);
+
+    public List<Session> findSessionCollision(LocalDate date1, LocalDate date2, LocalTime time1, LocalTime time2) {
+        ArrayList<Session> collision = new ArrayList();
+        for (Session session: sessionRepository.findSessionCollision(date1, date2)) {
+            if ((time1.isAfter(session.getTime()) && time1.)
+            || (time1.isBefore(session.getTime()) && session.getEndTime().isAfter(time1)))
+        }
+        return
     }
 }

@@ -1,5 +1,6 @@
 package com.example.cinema.entities;
 
+import org.hibernate.annotations.Type;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;

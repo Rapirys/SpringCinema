@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" >
 
 <head>
     <link rel="stylesheet" href="../static/css/header.css">
@@ -8,6 +8,9 @@
     <meta charset="UTF-8">
     <title>Place</title>
     <style>
+        input[type=checkbox]{
+            display: none;
+        }
         .place{
             display: inline-block;
         }
@@ -50,7 +53,7 @@
             <th:block th:each="place,j : ${row}">
                 <div class="place" th:switch="${place}">
                   <th:block th:case="'#'">
-                     <input type="checkbox" th:id="${i.index}+' '+${j.index}"  hidden/>
+                     <input type="checkbox" th:id="${i.index}+' '+${j.index}" />
                          <div class="place_free" onclick="choose(this)" th:id="${i.index}+' '+${j.index}" >
                          </div>
                   </th:block>
@@ -66,9 +69,14 @@
 </div>
 <script>
     function choose(el){
-        el.style.backgroundColor = 'yellow';
         var check = document.getElementById(el.id);
-        if(check.checked){check.checked='hidden';}else {check.checked='visible';}
+        if(check.checked){
+            check.checked=false;
+            el.style.backgroundColor = 'white';
+        }else {
+            check.checked=true;
+            el.style.backgroundColor = "rgba(56,207,255,0.99)";
+        }
     }
 </script>
 </body>

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import java.time.Duration;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Locale;
 
@@ -53,6 +54,12 @@ public class MvcConfig implements WebMvcConfigurer {
             public Duration convert(String source) {
                 return Duration.between(LocalTime.MIN, LocalTime.parse(source));
             }
+        });
+        registry.addConverter(new Converter<String, LocalDate>() {@Override
+            public LocalDate convert(String source) {return LocalDate.parse(source);}
+        });
+        registry.addConverter(new Converter<String, LocalTime>() {@Override
+        public LocalTime convert(String source) {return LocalTime.parse(source);}
         });
     }
 

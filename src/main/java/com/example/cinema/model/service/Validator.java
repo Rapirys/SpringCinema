@@ -28,19 +28,12 @@ public class Validator {
 
     public List<String> validUserFields(User user){
         List<String> s=new ArrayList<>();
-//        User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
-
         if (!email(user.getEmail()))
             s.add("Incorrect_email");
         if (!username(user.getUsername()))
             s.add("Username_too_short_or_too_long");
         if (!password(user.getPassword()))
             s.add("Password_problem");
-//        if (userFromDb != null) {
-//            s.add("User_already_exist");
-//        }
-
-        System.out.println(s.toString()+" "+1324);
         return s;
     }
 }

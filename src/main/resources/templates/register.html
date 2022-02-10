@@ -26,6 +26,7 @@
         <h2  th:text="#{Cinema}">Cinema</h2>
         <h2  th:text="#{Register_Page}">Register Page</h2>
         <p th:text="#{Register_from_here_to_access}">Register from here to access.</p>
+        <!--/*@thymesVar id="message" type=""*/-->
         <div  th:each="item : ${message}">
             <span th:text="#{${item}}"> </span>
         </div>
