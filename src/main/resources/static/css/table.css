@@ -173,6 +173,7 @@ table.table .avatar {
     color: #62c9e8;
 }
 .text-warning {
+    font-size: 400%;
     color: #FFC107;
 }
 .text-danger {

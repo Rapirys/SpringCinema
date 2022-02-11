@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Films</title>
+    <title>Session</title>
 
     <link rel="stylesheet" href="../static/css/header.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -76,7 +76,7 @@
         <!--            -->
         <!--/*@thymesVar id="error" type="String"*/-->
         <div class="table-filter" th:unless="${error}">
-            <form id="filter" method="get" th:action="@{/admin/film} ">
+            <form id="filter" method="get" th:action="@{/admin/session} ">
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="show-entries">
@@ -97,8 +97,8 @@
                         <div class="filter-group">
                             <label th:text="#{Sorting}">Sorting</label>
                             <select  name="sort" class="form-control">
-                                <option value="Title" th:text="#{Title}"></option>
-                                <option selected="selected" value="duration" th:text="#{Time}">Time</option>
+                                <option value="film.titleEn" th:text="#{Title}"></option>
+                                <option selected="selected" value="time" th:text="#{Time}">Time</option>
                                 <option value="occupancy" th:text="#{Occupancy}"></option>
                                 <option value="price" th:text="#{Price}"></option>
                             </select>
@@ -107,9 +107,9 @@
                             <label th:text="#{Status}">Status</label>
                             <select name="status" class="form-control">
                                 <option value="Any" th:text="#{Any}">Any</option>
-                                <option selected="selected" value="movie_is_on_now" th:text="#{Movie_is_on_now}"></option>
+<!--                                <option selected="selected" value="movie_is_on_now" th:text="#{Movie_is_on_now}"></option>-->
                                 <option value="movie_is_passed" th:text="#{Movie_is_passed}"></option>
-                                <option value="movie_will_be_shown" th:text="#{Movie_will_be_shown}"></option>
+                                <option selected="selected" value="movie_will_be_shown" th:text="#{Movie_will_be_shown}"></option>
                             </select>
                         </div>
                         <div class="filter-group">
@@ -145,10 +145,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="row,i: ${sessions}">
+            <tr th:each="row,i: ${sessions}" th:id="${i.index}">
                 <td th:text="${i.index + (page - 1)*quantity}"></td>
-                <td th:text="${#temporals.formatISO(row.date)}">Date</td>
-                <td th:text="${#temporals.formatISO(row.time)}">Time</td>
+                <td >
+                    <a th:text="${row.film.titleEn}" th:href="${'/admin/film?search='+row.film.titleEn}"/>
+                </td>
+                <td th:text="${row.date}">Date</td>
+                <td th:text="${row.time}">Time</td>
                 <td th:text="${row.occupancy}+'/'+${hallCapacity}">Occupancy</td>
                 <td th:text="${row.price}">Price</td>
                 <td>
@@ -168,17 +171,20 @@
                 </td>
 
                 <td>
-                    <a href="#" th:onclick="'delete_session('+${row.getSession_id()}+')'" class="view" th:title="#{Delete}" data-toggle="tooltip">
+                    <a href="#" th:onclick="'delete_session('+${row.getSession_id()}+','+${i.index}+')'" class="view" th:title="#{Delete}" data-toggle="tooltip">
                         <i class="material-icons">delete</i>
                     </a>
                 </td>
+
             </tr>
             </tbody>
         </table>
         <script>
-            function delete_film(id){}
-            // {$.get("/admin/film/delete?id="+id,function (data){location.reload()})}
-        </script>
+            function delete_session(id1,id2) {
+                $.get("/admin/session/delete?id="+id1,function (data){
+                document.getElementById(id2).remove();
+            })
+            }</script>
         <div class="clearfix">
             <ul class="pagination" th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
                 <li th:if="${page>1}" class="page-item disabled"><a th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page - 1).toUriString()}" th:text="#{Previous}">Previous</a></li>

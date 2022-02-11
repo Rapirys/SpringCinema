@@ -1,5 +1,7 @@
 package com.example.cinema.model;
 
+import com.example.cinema.contrloller.Admin.FilmController;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -9,6 +11,7 @@ import java.util.Scanner;
 
 @Component
 public class HallTopology {
+    private final static Logger logger = Logger.getLogger(HallTopology.class);
     int size;
     ArrayList<ArrayList<Character>> topology;
     @PostConstruct
@@ -22,11 +25,13 @@ public class HallTopology {
             for (int i=0; i<n; i++){
                 topology.add(new ArrayList<>(m));
                 char[] c=sc.next().toCharArray();
-                for(int j=0; j<m; j++)
+                for(int j=0; j<m; j++) {
+                    size+=(c[j]=='#')?1:0;
                     topology.get(i).add(c[j]);
+                }
             }
         } catch (Exception e) {
-            System.out.println("Problem with initializing topology of hall");
+            logger.warn("Problem with initializing topology of hall");
             System.exit(0);
         }
     }

@@ -15,9 +15,6 @@ import java.time.LocalTime;
 public class SpringCinemaApplication {
 
     public static void main(String[] args) {
-        LocalDate date;
-        LocalTime time;
-        System.out.println();
         SpringApplication.run(SpringCinemaApplication.class, args);
     }
 

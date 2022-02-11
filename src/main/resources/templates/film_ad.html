@@ -130,7 +130,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                  <tr th:each="film,i: ${films}">
+                  <tr th:each="film,i: ${films}" th:id="${i.index}">
                       <td th:text="${i.index + (page - 1)*quantity}"></td>
                       <td th:text="${film.titleEn}">Title_en</td>
                       <td th:text="${film.titleRu}">Title_ru</td>
@@ -147,7 +147,7 @@
                           </th:block>
                       </td>
                       <td>
-                          <a href="#" th:onclick="'delete_film('+${film.getFilm_id()}+')'" class="view" th:title="#{Delete}" data-toggle="tooltip">
+                          <a href="#" th:onclick="'delete_film('+${film.getFilm_id()}+','+${i.index}+')'" class="view" th:title="#{Delete}" data-toggle="tooltip">
                               <i class="material-icons">delete</i>
                           </a>
                       </td>
@@ -155,7 +155,7 @@
                 </tbody>
             </table>
             <script>
-                function delete_film(id){$.get("/admin/film/delete?id="+id,function (data){location.reload()})}
+                function delete_film(id1,id2){$.get("/admin/film/delete?id="+id1,function (data){document.getElementById(id2).remove();})}
                 function  swap_status(id,status){$.get("/admin/film/swap_status?id="+id+"&status="+status,function (data){location.reload()})}
             </script>
             <div class="clearfix">

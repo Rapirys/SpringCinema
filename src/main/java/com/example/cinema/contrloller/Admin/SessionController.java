@@ -10,14 +10,18 @@ import com.example.cinema.model.service.SortManager;
 import com.example.cinema.model.service.Validator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,17 +43,18 @@ public class SessionController {
 
     @GetMapping
     public String session(@RequestParam(name = "search", defaultValue = "") String search,
-                       @RequestParam(name ="sort", defaultValue = "titleEn") String sort,
-                       @RequestParam(name = "status", defaultValue = "at_box_office") String status,
-                       @RequestParam(name = "direction", defaultValue = "false") String direction,
-                       @RequestParam (name="page", defaultValue = "1") int page,
-                       @RequestParam (name="quantity", defaultValue = "10") int quantity, Model model) {
+                         @RequestParam(name ="sort", defaultValue = "time") String sort,
+                         @RequestParam(name = "status", defaultValue = "Any") String status,
+                         @RequestParam(name = "direction", defaultValue = "false") String direction,
+                         @RequestParam (name="page", defaultValue = "1") int page,
+                         @RequestParam (name="quantity", defaultValue = "10") int quantity, Model model) {
+        List<Film> films = filmRepository.findByBoxOfficeTrueOrderByTitleEn();
+        model.addAttribute("films", films);
         List<Session> sessions =sortManager.findSession(search, sort, status, page,quantity, direction);
         if (!model.containsAttribute("sessions")) {
-            List<Film> films = filmRepository.findByBoxOfficeTrueOrderByTitleEn();
-            model.addAttribute("films", films);
+            model.addAttribute("maxPage", 1);
+            model.addAttribute("sessions", sessions);
         }
-        model.addAttribute("sessions", sessions);
         model.addAttribute("maxPage", sessions.size()/quantity+1);
         model.addAttribute("page",page);
         model.addAttribute("quantity",quantity);
@@ -72,15 +77,13 @@ public class SessionController {
          }
          Film film=filmO.get();
          List<Session> sessionCollision =sortManager.findSessionCollision(date1, date2, time, time.plus(film.getDuration()));
-
-         if (sessionCollision.size()==0){
+         if (sessionCollision.size()!=0){
              redirectAttributes.addFlashAttribute("error","There_is_a_session_at_this_time");
              redirectAttributes.addFlashAttribute("sessions",sessionCollision);
              return "redirect:/admin/session";
          }
 
          while (date2.compareTo(date1)>=0) {
-             System.out.println(date1);
              Session session = new Session();
              session.setFilm(film).setTime(time).setPrice(price).setDate(date1);
              sessionRepository.save(session);
@@ -89,6 +92,12 @@ public class SessionController {
         return "redirect:/admin/session";
     }
 
+    @GetMapping("/delete")
+    public ResponseEntity<HttpStatus> delete(@RequestParam("id") Long id) {
+        sessionRepository.deleteById(id);
+        logger.debug("Delete session session_id:"+id);
+        return ResponseEntity.ok().body(HttpStatus.OK);
+    }
     @ModelAttribute
     public void newEntity(Model model)
     {

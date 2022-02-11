@@ -62,13 +62,14 @@ public class FilmController {
     }
 
     @GetMapping("/delete")
-    public ResponseEntity<HttpStatus> delete_add(@RequestParam("id") Long id) {
+    public ResponseEntity<HttpStatus> delete(@RequestParam("id") Long id) {
         filmRepository.deleteById(id);
         if (new File(path+id+".jpeg").delete())
             logger.debug("Delete movie film_id:"+id);
         else logger.warn("Problem with delete poster for film_id:+newFilm.getFilm_id()");
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
+
     @GetMapping("/swap_status")
     public ResponseEntity<HttpStatus> swap_status(@RequestParam("id") Long id, @RequestParam("status") boolean current) {
         filmRepository.update_status(id, current);

@@ -3,6 +3,7 @@ package com.example.cinema.model.repository;
 
 import com.example.cinema.entities.Film;
 import com.example.cinema.entities.Session;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -17,7 +18,16 @@ import java.util.List;
 public interface SessionRepository extends CrudRepository<Session, Long> {
 
 
-    public List<Session> findAll();
+    public List<Session> findAllByFilmTitleEnContains(String search);
+
+    @Query ("SELECT s FROM Session s where ((s.date>current_date) OR (s.date=current_date AND s.time>=?1))" +
+            " AND s.film.titleEn LIKE %?2%")
+    public List<Session> findAllByFilmTitleEnContainsAndWillBeShown(LocalTime current_time, String search, Pageable pageable);
+
+    @Query ("SELECT s FROM Session s where ((s.date<current_date) OR (s.date=current_date AND s.time<?1))" +
+            " AND s.film.titleEn LIKE %?2%")
+    public List<Session> findAllByFilmTitleEnContainsAndPast(LocalTime current_time, String search, Pageable pageable);
+
 
     @Query("SELECT s FROM Session s inner join Film f on s.film=f where (s.date between ?1 and ?2)")
     List<Session> findSessionCollision(LocalDate date1, LocalDate date2);
