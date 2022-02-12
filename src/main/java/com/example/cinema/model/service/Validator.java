@@ -5,6 +5,7 @@ import com.example.cinema.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -21,9 +22,13 @@ public class Validator {
 
     public boolean email(String s){
         return s.matches(VALID_EMAIL_ADDRESS_REGEX.pattern());
-    };
-    public boolean password(String s){ return s.matches(PASSWORD_REGEX.pattern());};
-    public boolean username(String s){ return s.length()>2 && s.length()<=20;}
+    }
+    public boolean password(String s){
+        return s.matches(PASSWORD_REGEX.pattern());
+    }
+    public boolean username(String s){
+        return s.length()>2 && s.length()<=20;
+    }
 
 
     public List<String> validUserFields(User user){
@@ -35,5 +40,11 @@ public class Validator {
         if (!password(user.getPassword()))
             s.add("Password_problem");
         return s;
+    }
+
+    public LocalDate toValidDate(LocalDate date,int shift) {
+        if (date==null || date.isBefore(LocalDate.now()))
+            date=LocalDate.now().plusDays(shift);
+        return date;
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.time.Duration;
+import java.util.Locale;
 import java.util.Objects;
 
 @Entity
@@ -19,6 +20,9 @@ public class Film {
     //Path to img=(title_en).jpg
 
 
+    public String getTitleLocale(String locale){
+        return (locale.equals("en"))?getTitleEn():getTitleRu();
+    }
     public String getFormatDuration(){
         return String.format("%02d",duration.toHours())+':'+String.format("%02d",duration.toMinutesPart());
     }
@@ -27,7 +31,7 @@ public class Film {
         if (this == o) return true;
         if (!(o instanceof Film)) return false;
         Film films = (Film) o;
-        return film_id == films.film_id && titleRu.equals(films.titleRu) && titleEn.equals(films.titleEn) && duration.equals(films.duration);
+        return film_id.equals(films.film_id) && titleRu.equals(films.titleRu) && titleEn.equals(films.titleEn);
     }
 
     @Override

@@ -36,7 +36,7 @@ public class FilmController {
     public String film(@RequestParam(name = "search", defaultValue = "") String search,
                        @RequestParam(name ="sort", defaultValue = "titleEn") String sort,
                        @RequestParam(name = "status", defaultValue = "at_box_office") String status,
-                       @RequestParam(name = "direction", defaultValue = "false") String direction,
+                       @RequestParam(name = "direction", defaultValue = "false") boolean direction,
                        @RequestParam (name="page", defaultValue = "1") int page,
                        @RequestParam (name="quantity", defaultValue = "10") int quantity, Model model) {
         List<Film> films = sortManager.findFilms(search, sort, status, page,quantity, direction);

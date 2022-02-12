@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/header.css">
+    <style>
+        body{
+            background-image: url("../static/img/zero.jfif");
+        }
+        .center{
+            position:absolute;
+            width:100%;
+            top:50%;
+            text-align: center;
+            font-size: 400%;
+            color: whitesmoke;
+        }
+    </style>
+</head>
+
+<body>
+<header class="header">
+    <div sec:authorize="isAnonymous()">
+        <a href="login"><img class="hbtn" src="../static/img/login.png"></a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <form  th:action="@{/logout}" method="post"> <input type="image" img class="hbtn"  src="../static/img/logout.png"> </form>
+    </div>
+    <div class="lang_buttons">
+        <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
+    </div>
+    <script>
+        function swap_len(){$.get('/command/lang',function (data){location.reload()})}
+    </script>
+</header>
+<div class="center">
+   <p th:text="#{No_session}">Сейчас cеансов с такими параметрами нет.</p>
+    <a href="/"><------------</a>
+</div>
+</body>
+</html>

@@ -32,7 +32,7 @@
         </script>
 </header>
 <div class="d2" id="menu" style="visibility: hidden">
-   <form method="post" th:action="@{/}">
+   <form method="get" th:action="@{/}">
        <input name="search" type="text" placeholder="Искать здесь...">
        <button type="submit"></button>
        <div class="choose">
@@ -40,37 +40,45 @@
            <input type="checkbox" name="availability">
            <label>Доступность</label>
        </div>
-       <div class="session">
+       <div class="sort_session">
            <p>По сеансам</p>
-           <input type="radio" name="session" value="place">
+           <input type="radio" name="session" value="occupancy">
            <label>Количество мест</label>
            <input type="radio" name="session" value="time">
            <label>Время</label>
        </div>
-           <div class="films">
+           <div class="sort_film">
                <p>По фильмам</p>
-               <input type="radio" name="films" value="title">
+               <input type="radio" name="films" th:value="'title'+#{locale}">
                <label>Название</label>
                <input type="radio" name="films" value="duration">
                <label>Длительность</label>
            </div>
            <div class="date">
-               <input name = date1 type="date" th:value="${#temporals.format(localDate, 'yyyy-MM-dd')}"  th:min="${#temporals.format(localDate, 'yyyy-MM-dd')}">
-               <input name = date2 type="date" th:value="${#temporals.format(localDate, 'yyyy-MM-dd')}"  th:min="${#temporals.format(localDate, 'yyyy-MM-dd')}">
+               <input id="date1" name = date1 type="date" th:value="${#temporals.format(localDate, 'yyyy-MM-dd')}"  th:min="${#temporals.format(localDate, 'yyyy-MM-dd')}">
+               <input name = date2 id="date2" type="date" th:value="${#temporals.format(localDate, 'yyyy-MM-dd')}"   th:min="${#temporals.format(localDate, 'yyyy-MM-dd')}">
+               <p th:text="#{Maximum_span}"/>
            </div>
        </div>
-
    </form>
 </div>
 
 <div class="slider" id="slider">
     <div class="slItems">
-        <div class="slItem" style="background-image: url('https://unsplash.it/1920/1080?image=990');">
-            <div class="slText">
-                jQuery Slider.js Backgounrd Carousel Example
-            </div>
-        </div>
-        </th:block>
+                <th:block th:each="film,i: ${films}">
+                    <div class="slItem" th:style="'background-image: url(\'../static/posters/'+${film.film_id}+'.jpeg\')'">
+                        <div class="title" th:switch="#{locale}">
+                            <h1 th:case="'Ru'" th:text="${film.titleRu}"/>
+                            <h1 th:case="'En'" th:text="${film.titleEn}"/>
+                        </div>
+                        <div class="myTable">
+                            <div class="row" th:each="row, j: ${sessions.get(film)}">
+                               <label class="time" th:text="${row.get(0).date}+':'"></label>
+                               <a  class="time" th:each="element, k: ${row}" th:text="${element.time}" th:href="'/place?id='+${element.session_id}"></a>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
     </div>
 </div>
 <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
@@ -85,18 +93,6 @@
         });
     });
 </script><script type="text/javascript">
-
-    // var _gaq = _gaq || [];
-    // _gaq.push(['_setAccount', 'UA-36251023-1']);
-    // _gaq.push(['_setDomainName', 'jqueryscript.net']);
-    // _gaq.push(['_trackPageview']);
-    //
-    // (function() {
-    //     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    //     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    //     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    // })();
-
 </script>
 </body>
 </html>

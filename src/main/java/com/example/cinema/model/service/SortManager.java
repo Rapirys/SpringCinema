@@ -13,8 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class SortManager {
@@ -23,7 +22,7 @@ public class SortManager {
     @Autowired
     SessionRepository sessionRepository;
 
-    public List<Film> findFilms(String search, String sort, String status, int page, int quantity, String desc) {
+    public List<Film> findFilms(String search, String sort, String status, int page, int quantity, boolean desc) {
         Sort sortPattern;
         sortPattern = getDirection(desc, Sort.by(sort));
         Pageable pageable= PageRequest.of(page-1,quantity,sortPattern);
@@ -34,7 +33,8 @@ public class SortManager {
              return filmRepository.findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeTrue(search,search, pageable);
         else return  filmRepository.findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeFalse(search,search, pageable);
     }
-    public List<Session> findSession(String search, String sort, String status, int page, int quantity, String direction) {
+
+    public List<Session> findSession(String search, String sort, String status, int page, int quantity, boolean direction) {
         Sort sortPattern;
         if (sort.equals("time")) {
             sortPattern = Sort.by("date");
@@ -55,8 +55,8 @@ public class SortManager {
 
     }
 
-    private Sort getDirection(String direction, Sort sortPattern) {
-        if (direction.equals("true"))
+    private Sort getDirection(boolean direction, Sort sortPattern) {
+        if (!direction)
             sortPattern = sortPattern.descending();
         else sortPattern = sortPattern.ascending();
         return sortPattern;
@@ -76,5 +76,36 @@ public class SortManager {
                 collision.add(session);
         }
         return collision;
+    }
+
+
+    public LinkedList<Film> findSimpleFilms(String search, String sort_film) {
+        Sort sort=Sort.by(sort_film).descending();
+        return filmRepository.findAllByTitleEnContainsOrTitleRu(search,search, sort);
+    }
+
+    public List<Session> findSimpleSession(Film film, String sort_session, LocalDate date1) {
+        Sort sort=Sort.by(sort_session);
+        return sessionRepository.findAllBetween(film,date1,LocalTime.now(),sort);
+    }
+
+    public HashMap<Film, List<List<Session>>> tableSessionByFilm(LinkedList<Film> films,String sort_session, LocalDate date1, LocalDate date2) {
+        HashMap<Film, List<List<Session>>> rezalt=new HashMap<>();
+        for(Iterator<Film> iterator = films.iterator(); iterator.hasNext();){
+            Film film = iterator.next();
+            List<List<Session>> sessionsByFilm= new ArrayList<>();
+            LocalDate dateT=date1;
+            while (date2.compareTo(dateT)>=0) {
+                List<Session> sessionsAtDey=findSimpleSession(film,sort_session, dateT);
+                if (sessionsAtDey.size()!=0) {
+                    sessionsByFilm.add(sessionsAtDey);
+                }
+                dateT=dateT.plusDays(1);
+            }
+            if (sessionsByFilm.size()==0)
+                iterator.remove();
+            else rezalt.put(film, sessionsByFilm);
+        }
+        return rezalt;
     }
 }
