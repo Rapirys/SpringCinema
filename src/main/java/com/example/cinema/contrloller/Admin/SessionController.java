@@ -17,11 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,19 +74,16 @@ public class SessionController {
              return "redirect:/admin/session";
          }
          Film film=filmO.get();
-         List<Session> sessionCollision =sortManager.findSessionCollision(date1, date2, time, time.plus(film.getDuration()));
-         if (sessionCollision.size()!=0){
+        Session session = new Session();
+        session.setFilm(film).setTime(time).setPrice(price);
+         Optional<List<Session>> sessionCollisionO =sortManager.findSessionCollisionOrSave(date1, date2,session);
+         if (sessionCollisionO.isPresent()){
+             List<Session> sessionCollision=sessionCollisionO.get();
              redirectAttributes.addFlashAttribute("error","There_is_a_session_at_this_time");
              redirectAttributes.addFlashAttribute("sessions",sessionCollision);
              return "redirect:/admin/session";
          }
 
-         while (date2.compareTo(date1)>=0) {
-             Session session = new Session();
-             session.setFilm(film).setTime(time).setPrice(price).setDate(date1);
-             sessionRepository.save(session);
-             date1=date1.plusDays(1);
-         }
         return "redirect:/admin/session";
     }
 

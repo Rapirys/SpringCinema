@@ -25,8 +25,8 @@ public interface SessionRepository extends CrudRepository<Session, Long> {
     List<Session> findAllByFilmTitleEnContainsAndWillBeShown(LocalTime current_time, String search, Pageable pageable);
 
     @Query ("SELECT s FROM Session s where ((s.date>current_date ) OR (s.date=current_date AND s.time>=?3))" +
-            " AND s.film=?1 AND s.date=?2 ")
-    List<Session> findAllBetween(Film film, LocalDate date1, LocalTime current, Sort sort);
+            " AND s.film=?1 AND s.date=?2 AND s.occupancy<=?4")
+    List<Session> findAllBetween(Film film, LocalDate date1, LocalTime current,int occupancy, Sort sort);
 
     @Query ("SELECT s FROM Session s where ((s.date<current_date) OR (s.date=current_date AND s.time<?1))" +
             " AND s.film.titleEn LIKE %?2%")

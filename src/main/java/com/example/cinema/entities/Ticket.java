@@ -5,25 +5,28 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tickets", indexes = @Index(name = "ticket_index", columnList = "order_id"),
-       uniqueConstraints = { @UniqueConstraint( columnNames = { "place", "row"} )})
+       uniqueConstraints = { @UniqueConstraint( columnNames = { "place", "row","order_id"} )})
 public class Ticket {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long ticket_id;
 
+
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+    @ManyToOne
+    @JoinColumn(name = "session_id")
+    private Session session;
     private int  place;
     private int row;
 
-    public Order getOrder() {
-        return order;
+    public Ticket(int row, int place, Order order) {
+        this.place = place;
+        this.row = row;
+        this.order=order;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -37,6 +40,15 @@ public class Ticket {
     public int hashCode() {
         return Objects.hash(ticket_id, place, row);
     }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
 
     public Ticket() {
     }

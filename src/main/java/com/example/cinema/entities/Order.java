@@ -16,6 +16,7 @@ public class Order {
     User user;
     @OneToMany(mappedBy = "ticket_id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets =new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "session_id")
     private Session session;
