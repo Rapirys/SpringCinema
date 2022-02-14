@@ -14,6 +14,7 @@ public class Order {
     private Long order_id;
     @ManyToOne
     User user;
+
     @OneToMany(mappedBy = "ticket_id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets =new ArrayList<>();
 
@@ -45,46 +46,52 @@ public class Order {
         return order_id;
     }
 
-    public void setOrder_id(Long order_id) {
+    public Order setOrder_id(Long order_id) {
         this.order_id = order_id;
+        return this;
     }
 
     public List<Ticket> getTickets() {
         return tickets;
     }
 
-    public void setTickets(List<Ticket> comments) {
+    public Order setTickets(List<Ticket> comments) {
         this.tickets = comments;
+        return this;
     }
 
     public Session getSession() {
         return session;
     }
 
-    public void setSession(Session session) {
+    public Order setSession(Session session) {
         this.session = session;
+        return this;
     }
 
     public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public Order setTime(LocalDateTime time) {
         this.time = time;
+        return this;
     }
 
     public boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public Order setActive(boolean active) {
         this.active = active;
+        return this;
     }
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public Order setUser(User user) {
         this.user = user;
+        return this;
     }
 }

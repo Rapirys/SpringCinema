@@ -54,7 +54,7 @@ public class FilmController {
         try {
             file.transferTo(new File(path+newFilm.getFilm_id()+".jpeg"));
             logger.debug("Add new movie film_id:"+newFilm.getFilm_id());
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             logger.error("Problem with loading poster for film_id:"+newFilm.getFilm_id(), e);
         }

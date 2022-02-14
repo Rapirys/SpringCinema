@@ -29,9 +29,10 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-4">
-                        <h2>Film <b>Details</b></h2>
+                        <h2> <th:block th:text="#{Sessions}"/>  <b th:text="#{Details}">Details</b></h2>
                     </div>
                     <div class="col-sm-8">
+                        <a href="/admin/session" class="btn btn-primary"><i class="material-icons">&#xE863;</i> <span th:text="#{Session}">Refresh List</span></a>
                         <form  th:action="@{/logout}" method="post"> <input type="image" img class="hbtn"  src="../static/img/logout.png"> </form>
                         <div class="lang_buttons">
                             <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
@@ -39,7 +40,6 @@
                         <script>
                             function swap_len(){$.get('/command/lang',function (data){location.reload()})}
                         </script>
-<!--                        <a href="#" class="btn btn-primary"><i class="material-icons">&#xE863;</i> <span>Same button</span></a>-->
                     </div>
                 </div>
             </div>

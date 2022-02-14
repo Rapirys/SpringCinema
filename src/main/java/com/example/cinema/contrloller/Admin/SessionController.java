@@ -3,7 +3,7 @@ package com.example.cinema.contrloller.Admin;
 
 import com.example.cinema.entities.Film;
 import com.example.cinema.entities.Session;
-import com.example.cinema.model.HallTopology;
+import com.example.cinema.model.service.Hall.HallTopology;
 import com.example.cinema.model.repository.FilmRepository;
 import com.example.cinema.model.repository.SessionRepository;
 import com.example.cinema.model.service.SortManager;
@@ -74,8 +74,8 @@ public class SessionController {
              return "redirect:/admin/session";
          }
          Film film=filmO.get();
-        Session session = new Session();
-        session.setFilm(film).setTime(time).setPrice(price);
+         Session session = new Session();
+         session.setFilm(film).setTime(time).setPrice(price);
          Optional<List<Session>> sessionCollisionO =sortManager.findSessionCollisionOrSave(date1, date2,session);
          if (sessionCollisionO.isPresent()){
              List<Session> sessionCollision=sessionCollisionO.get();

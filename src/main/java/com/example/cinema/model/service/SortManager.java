@@ -2,7 +2,7 @@ package com.example.cinema.model.service;
 
 import com.example.cinema.entities.Film;
 import com.example.cinema.entities.Session;
-import com.example.cinema.model.HallTopology;
+import com.example.cinema.model.service.Hall.HallTopology;
 import com.example.cinema.model.repository.FilmRepository;
 import com.example.cinema.model.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDate;
@@ -84,7 +83,7 @@ public class SortManager {
             return Optional.of(collision);
         while (date2.compareTo(date1)>=0) {
             prototype.setDate(date1);
-            sessionRepository.save(prototype);
+            sessionRepository.save(new Session(prototype));
             date1=date1.plusDays(1);
         }
         return Optional.empty();

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="../static/css/header.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <style>
         body{
             background-image: url("../static/img/zero.jfif");
@@ -12,10 +13,10 @@
         .center{
             position:absolute;
             width:100%;
-            top:50%;
+            top:10%;
             text-align: center;
             font-size: 400%;
-            color: whitesmoke;
+            color: #110513;
         }
     </style>
 </head>
@@ -36,8 +37,7 @@
     </script>
 </header>
 <div class="center">
-   <p th:text="#{No_session}">Сейчас cеансов с такими параметрами нет.</p>
-    <a href="/"><------------</a>
+   <p th:text="#{No_session}"></p>
 </div>
 </body>
 </html>

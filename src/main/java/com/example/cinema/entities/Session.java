@@ -26,6 +26,13 @@ public class Session {
 
     public Session(){};
 
+    public Session(Session session) {
+        this.price=session.price;
+        this.time=session.time;
+        this.date=session.date;
+        this.film=session.film;
+    }
+
     public Film getFilm() {
         return film;
     }

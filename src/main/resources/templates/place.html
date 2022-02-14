@@ -15,6 +15,11 @@
     <meta charset="UTF-8">
     <title>Place</title>
     <style>
+        body{
+            background: #ddeefc;
+            font-family: "Source Sans Pro", sans-serif;
+            font-size: 16px;
+        }
         input[type=checkbox]{
             display: none;
         }
@@ -24,12 +29,12 @@
             font-weight: 600;
         }
         .place{
+
             display: inline-block;
         }
         .hall {
             position: absolute;
             top: 55%;
-            /*background-color: #F15B42;*/
             left: 50%;
             margin-right: -50%;
             transform: translate(-50%, -50%)
@@ -40,11 +45,19 @@
             width: 1.5rem;
             border-radius: 4px;
         }
+        .place_grey{
+            background-color: #737171;
+            border: 2px solid rgb(37, 59, 70);
+            height: 2.25rem;
+            width: 1.5rem;
+            border-radius: 4px;
+        }
         .place_white{
             height: 2.25rem;
             width: 1.5rem;
         }
         .poster{
+            box-shadow: 0px 10px 15px 10px #000;
             position: absolute;
             width: 30%;
             top: 35%;
@@ -59,7 +72,9 @@
             border-radius: 10px;
             background-color: rgb(7, 160, 236);
             text-align: center;
-
+        }
+        .batt:hover{
+            background-color: rgb(17, 147, 211);
         }
         .batt label{
             position: center;
@@ -100,13 +115,17 @@
                       <div class="place_white">
                       </div>
                   </th:block>
+                  <th:block th:case="'X'">
+                      <div class="place_grey">
+                      </div>
+                  </th:block>
                 </div>
             </th:block>
         </div>
     </th:block>
 </div>
-<div class="batt">
-    <label onclick="submit()" id="submit">0</label>
+<div onclick="submit()" class="batt">
+    <label  id="submit">0</label>
 </div>
 <script>
     var token = $("meta[name='_csrf']").attr("content");
@@ -138,13 +157,20 @@
             let l= [];
             $('input[type="checkbox"]:checked').each(function (){
                 l.push(this.id)
+                this.checked=false;
             });
-            console.log(l)
+
 
             $.ajax({
                 url: '/order',
                 type: 'POST',
                 cache: false,
+                success: function (data){
+                    window.location.href = '/order?id='+data;
+                },
+                error: function (data){
+                    window.location.reload();
+                },
                 data: 'data='+l+'&session_id='+document.getElementById('session').innerText
             })
         }

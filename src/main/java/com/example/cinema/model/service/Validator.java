@@ -21,16 +21,26 @@ public class Validator {
 
 
     public boolean email(String s){
-        return s.matches(VALID_EMAIL_ADDRESS_REGEX.pattern());
+        return s!=null && s.matches(VALID_EMAIL_ADDRESS_REGEX.pattern());
     }
     public boolean password(String s){
-        return s.matches(PASSWORD_REGEX.pattern());
+        return s!=null && s.matches(PASSWORD_REGEX.pattern());
     }
     public boolean username(String s){
-        return s.length()>2 && s.length()<=20;
+        return s!=null && s.length()>2 && s.length()<=20;
     }
-
-
+    public boolean cvv(String cvv){
+       return cvv!=null && cvv.matches("^[0-9]{3,4}");
+    }
+    public boolean cardNumber(String cardNumber){
+         return cardNumber!=null && cardNumber.matches("^[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}");
+    }
+    public boolean year(Integer year){
+       return year!=null && year>=2022 && year<=3000;
+    }
+    public boolean month(Integer month){
+        return month!=null && month>=0 && month<=12;
+    }
     public List<String> validUserFields(User user){
         List<String> s=new ArrayList<>();
         if (!email(user.getEmail()))
@@ -48,4 +58,7 @@ public class Validator {
         return date;
     }
 
+    public boolean validCard(String cardNumber, String cvv, Integer dateM, Integer dateY, String holder) {
+        return cardNumber(cardNumber) && cvv(cvv) && year(dateY) && month(dateM) && (holder!=null);
+    }
 }

@@ -62,6 +62,4 @@ public class MvcConfig implements WebMvcConfigurer {
         public LocalTime convert(String source) {return LocalTime.parse(source);}
         });
     }
-
-
 }
