@@ -1,7 +1,6 @@
 package com.example.cinema.contrloller;
 
 
-import com.example.cinema.entities.Film;
 import com.example.cinema.entities.Order;
 import com.example.cinema.entities.Session;
 import com.example.cinema.entities.Ticket;
@@ -15,25 +14,22 @@ import com.example.cinema.model.service.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 @Controller
+@PreAuthorize("hasAuthority('USER')")
 public class OrderControler {
     @Autowired
     Validator validator;
@@ -80,6 +76,10 @@ public class OrderControler {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!order.getUser().getUsername().equals(auth.getName()))
             return "redirect:/";
+        if (order.isActive())
+            return "orderOld";
+
+        order.setTickets(ticketRepository.findTicketsByOrder(order));
         model.addAttribute("order", order);
         return "order";
     }
@@ -92,7 +92,7 @@ public class OrderControler {
                       @RequestParam("order_id") Long order_id,
                       RedirectAttributes redirectAttributes){
         if (!validator.validCard(cardNumber, cvv, dateM, dateY, holder)) {
-            ArrayList<String> messages =new ArrayList<String>();
+            ArrayList<String> messages = new ArrayList<>();
             messages.add("Card_data_error");
             redirectAttributes.addFlashAttribute("message",messages);
             redirectAttributes.addAttribute("id",order_id);
@@ -102,7 +102,7 @@ public class OrderControler {
        try {
            order=orderManager.submit(order_id);
        } catch (Exception e) {
-           return "redirect:/";
+           return "orderOld";
        }
        redirectAttributes.addAttribute("order",order);
        return "redirect:/download";
@@ -116,7 +116,7 @@ public class OrderControler {
         model.addAttribute("id", order.getOrder_id());
         return "download";
    }
-    @GetMapping("/donwloadOrder")
+    @GetMapping("/downloadOrder")
     public void getFile(@RequestParam("id") Long id, HttpServletResponse response) {
         Optional<Order> o=orderRepository.findById(id);
         Order order;
@@ -137,6 +137,7 @@ public class OrderControler {
             throw new RuntimeException("IOError writing file to output stream");
         }
     }
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/ticket")
     public String getFile(@RequestParam("id") Long id,
                           @RequestParam("salt") Long salt,Model model) {

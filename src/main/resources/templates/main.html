@@ -13,6 +13,7 @@
 </head>
 <body>
 <header class="header">
+
     <div sec:authorize="isAnonymous()">
         <a href="login"><img class="hbtn" src="../static/img/login.png"></a>
     </div>
@@ -22,6 +23,9 @@
     <input  type="image" onclick="show_menu()" class="hbtn" src="../static/img/menu.png" alt="menu">
     <div class="lang_buttons">
         <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
+    </div>
+    <div sec:authorize="hasAuthority('ADMIN')">
+        <h2 > <a href="/admin/session" class="tbtn"  ><p th:text="#{ADMIN}" style="position: relative; top: -4px;"/> </a></h2>
     </div>
         <script>
             function swap_len(){$.get('/command/lang',function (data){location.reload()})}

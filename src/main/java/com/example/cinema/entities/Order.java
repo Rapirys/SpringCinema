@@ -31,7 +31,7 @@ public class Order {
         if (this == o) return true;
         if (!(o instanceof Order)) return false;
         Order order = (Order) o;
-        return active == order.active && order_id.equals(order.order_id) && tickets.equals(order.tickets) && session.equals(order.session) && time.equals(order.time);
+        return tickets.equals(order.tickets);
     }
 
     @Override

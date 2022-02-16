@@ -13,16 +13,12 @@ import com.example.cinema.model.service.Hall.Place;
 import com.itextpdf.text.*;
 
 import com.itextpdf.text.pdf.BarcodeQRCode;
-import com.itextpdf.text.pdf.PdfFormXObject;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import javax.swing.text.StyleConstants;
-import java.io.FileOutputStream;
 
 import java.io.OutputStream;
 import java.time.LocalDateTime;
@@ -87,7 +83,10 @@ public class OrderManager {
     @Transactional
     public Order submit(Long order_id) throws Exception {
         Order order= orderRepository.findById(order_id).orElseThrow(OrderNotExist::new);
-        order.setActive(true);
+        if (!order.isActive())
+            order.setActive(true);
+        else throw new OrderNotExist();
+        order.getSession().incOccupancy(ticketRepository.countTicketByOrder(order));
         orderRepository.save(order);
         return order;
     }

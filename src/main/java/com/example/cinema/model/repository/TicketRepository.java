@@ -17,5 +17,6 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
     @Query(value = "  SELECT * FROM findHall(?1)  ORDER BY \"row\", place", nativeQuery = true)
     List<Ticket> getHallBySession(Long id);
     List<Ticket> findTicketsByOrder(Order order);
+    int countTicketByOrder(Order order);
 
 }

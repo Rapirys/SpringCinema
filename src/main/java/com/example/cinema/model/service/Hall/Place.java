@@ -1,6 +1,8 @@
 package com.example.cinema.model.service.Hall;
 
-public class Place implements Cloneable{
+import java.util.Objects;
+
+public class Place{
     public int row, place;
     public Character type;
 
@@ -22,4 +24,16 @@ public class Place implements Cloneable{
         this.type = type;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Place)) return false;
+        Place place1 = (Place) o;
+        return row == place1.row && place == place1.place && type.equals(place1.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, place, type);
+    }
 }

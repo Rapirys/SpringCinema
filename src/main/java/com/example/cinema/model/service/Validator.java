@@ -12,11 +12,7 @@ import java.util.regex.Pattern;
 
 @Service
 public class Validator {
-
-//    @Autowired
-//    private UserRepository userRepository;
-
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
     public static final Pattern PASSWORD_REGEX = Pattern.compile("^[A-Za-z0-9]{6,40}");//"^[a-zA-Z][a-zA-Z0-9-_\\.]{6,20}$");
 
 

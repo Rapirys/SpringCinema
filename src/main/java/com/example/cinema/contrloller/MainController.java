@@ -57,7 +57,7 @@ public class MainController {
             date2=date1;
         if (date1.plusDays(14).isBefore(date2))
             date2=date1.plusDays(14);
-        HashMap<Film, List<List<Session>>> sessions=sortManager.tableSessionByFilm(films,sort_session, date1, date2, availability);
+        HashMap<Film, List<List<Session>>> sessions=sortManager.tableSessionByFilm(films,sort_session, sort_film, date1, date2, availability);
         if (films.size()==1)
             films.add(films.get(0));
         if (films.size()==0)

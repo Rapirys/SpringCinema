@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Download</title>
+    <title>Order unavailable</title>
     <link rel="stylesheet" href="../static/css/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -38,7 +38,7 @@
             background-color: RoyalBlue;
         }
         .btn a{
-          /*display: inline-block;*/
+            /*display: inline-block;*/
             display: block;
             text-decoration: none;
             color: white;
@@ -56,12 +56,8 @@
     </script>
 </header>
 <div class="center">
-   <p th:text="#{Ticket_available_for_download}"></p>
-   <div class="btn" style="width:60%">
-         <a th:href="'/downloadOrder?id='+${id}" download> <i class="fa fa-download"></i> <label th:text="#{Download}" />
-        </a>
+    <p th:text="#{Order_unavailable}"></p>
 
-   </div>
 </div>
 </body>
 </html>

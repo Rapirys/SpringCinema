@@ -24,13 +24,15 @@ public class Session {
     private int occupancy=0;
 
 
-    public Session(){};
+    public Session(){}
 
     public Session(Session session) {
         this.price=session.price;
         this.time=session.time;
         this.date=session.date;
         this.film=session.film;
+        this.session_id=session.session_id;
+        this.occupancy=session.occupancy;
     }
 
     public Film getFilm() {
@@ -97,5 +99,9 @@ public class Session {
 
     public LocalTime getEndTime() {
         return time.plus(film.getDuration());
+    }
+
+    public void incOccupancy(int n) {
+        occupancy=occupancy+n;
     }
 }
