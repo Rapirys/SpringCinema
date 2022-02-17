@@ -11,14 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
+/**
+ *
+ Used for easy access to cookies,
+ must be called from the controller or request scope.
+ */
 @Service
 @RequestScope
 public class CookieManager {
 
     @Autowired
-    private HttpServletRequest request;
+    HttpServletRequest request;
     @Autowired
-    private HttpServletResponse response;
+    HttpServletResponse response;
     @Autowired
     LocaleResolver localeResolver;
 

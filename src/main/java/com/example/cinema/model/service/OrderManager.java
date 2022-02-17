@@ -28,6 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ *
+ Handles all actions related to booking, orders, and payment.
+ */
 @Service
 public class OrderManager {
     static int timeOfOrderMinute=15;
@@ -42,6 +46,15 @@ public class OrderManager {
     TicketRepository ticketRepository;
     @Autowired
     HallTopology hallTopology;
+
+    /**
+     * Creates a new order, and books seats, the booking will be invalid after 15 minutes.
+     * @throws SessionNotExist throws an error if order creation failed or DB error if the seats are already taken.
+     * @param data List of places for tickets in the form :"row_place"
+     * @param session_id id of session;
+     * @param username username for which the order is registered
+     * @return id of new order;
+     */
     @Transactional
     public Long book(List<String> data,Long session_id, String username){
         User user = userRepository.findByUsername(username);
@@ -51,7 +64,7 @@ public class OrderManager {
             Order order= new Order();
             order.setUser(user).setSession(session).setActive(false).setTime(LocalDateTime.now());
             orderRepository.deleteBySessionAndActiveFalseAndTimeBefore(session,LocalDateTime.now().minusMinutes(timeOfOrderMinute));
-            order =orderRepository.save(order);
+            order = orderRepository.save(order);
             List<Ticket> tickets=generateTickets(data, order);
             ticketRepository.saveAll(tickets);
             logger.debug("User with id: "+user.getId()+ " booked seats for session id: "+session_id+" order id: "+ order.getOrder_id());
@@ -66,6 +79,11 @@ public class OrderManager {
     }
 
 
+    /**
+     * @param data List of places for tickets in the form :"row_place"
+     * @param order Order entity to which tickets are added.
+     * @return List of ticket which can be saved in DB.
+     */
     public List<Ticket> generateTickets(List<String> data, Order order){
         List<Ticket> tickets = new ArrayList();
         for (String s:data){
@@ -76,6 +94,9 @@ public class OrderManager {
         return tickets;
     }
 
+    /**
+     * @return hall topology with occupied seats
+     */
     public ArrayList<ArrayList<Place>> getHall(Session session) {
         List<Ticket> tickets=ticketRepository.getHallBySession(session.getSession_id());
         return hallTopology.getCopyTopology(tickets);
@@ -88,9 +109,15 @@ public class OrderManager {
         else throw new OrderNotExist();
         order.getSession().incOccupancy(ticketRepository.countTicketByOrder(order));
         orderRepository.save(order);
+        logger.trace("Order id: "+order_id+"  has been paid.");
         return order;
     }
 
+    /**
+     * Used to get a list of order tickets in PDF.
+     * @param order Entity of order for which pdf will be generated
+     * @param outputStream Stream with pdf written to it
+     */
     public void getPdf(Order order, OutputStream outputStream) throws DocumentException {
         List<Ticket> tickets=ticketRepository.findTicketsByOrder(order);
         Document document = new Document();

@@ -8,9 +8,16 @@ import javax.annotation.PostConstruct;
 import java.io.FileReader;
 import java.util.*;
 
+/**
+ * Represents the hall topology.
+ * Stores topology information on application startup.
+ */
 @Component
 public class HallTopology {
     private final static Logger logger = Logger.getLogger(HallTopology.class);
+    /**
+     * Maps the location number and series to coordinates in space.
+     */
     HashMap<Point, Point> map;
     int size;
     public int m,n;

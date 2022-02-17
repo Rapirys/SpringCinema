@@ -1,10 +1,12 @@
 package com.example.cinema.contrloller;
 
+import com.example.cinema.contrloller.Admin.FilmController;
 import com.example.cinema.entities.Role;
 import com.example.cinema.entities.User;
 import com.example.cinema.model.repository.UserRepository;
 import com.example.cinema.model.service.Validator;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import java.util.Set;
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
+    private final static Logger logger = Logger.getLogger(RegisterController.class);
 
 
 
@@ -57,6 +60,7 @@ public class RegisterController {
             redirectAttributes.addFlashAttribute("message",s);
             return "redirect:/register";
         }
+        logger.debug("User name: "+user.getUsername()+"registered");
         return "redirect:/login";
     }
 

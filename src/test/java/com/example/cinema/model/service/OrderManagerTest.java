@@ -4,6 +4,7 @@ import com.example.cinema.entities.Order;
 import com.example.cinema.entities.Ticket;
 import com.example.cinema.model.service.Hall.Place;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -32,6 +33,5 @@ class OrderManagerTest {
             assertEquals(ticket.getOrder().getOrder_id(),1L);
         }
     }
-
 
 }

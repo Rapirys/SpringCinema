@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ *
+ This class is used to validate values.
+ Methods can return object validity status, object corrections, or error messages for composite objects.
+ */
 @Service
 public class Validator {
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
@@ -37,6 +42,11 @@ public class Validator {
     public boolean month(Integer month){
         return month!=null && month>=0 && month<=12;
     }
+
+    /**
+     * @param user
+     * @return List of errors to display in the view. Errors should have a translation in the resource bundle.
+     */
     public List<String> validUserFields(User user){
         List<String> s=new ArrayList<>();
         if (!email(user.getEmail()))

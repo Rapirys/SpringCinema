@@ -2,6 +2,13 @@ package com.example.cinema.model.service.Hall;
 
 import java.util.Objects;
 
+/**
+ * Represents a seats in a movie theater.
+ * Contains data about the seat number and its type.
+ * '0'-no space.
+ * '#'-free(default).
+ * 'X'- is busy.
+ */
 public class Place{
     public int row, place;
     public Character type;

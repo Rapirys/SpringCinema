@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FilmTest {
-
     @Test
     void getTitleLocale() {
         Film film = new Film();
@@ -14,5 +13,4 @@ class FilmTest {
         assertEquals(film.getTitleLocale("en"),"en");
         assertEquals(film.getTitleLocale("ru"),"ru");
     }
-
 }

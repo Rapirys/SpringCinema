@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
@@ -10,7 +9,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+    <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script>
+</head>
 <body>
 
 <div class="sidenav">
@@ -18,16 +18,20 @@
         <div class="lang_buttons">
             <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
             <script>
-                function swap_len(){$.get('/command/lang',function (data){location.reload()})}
+                function swap_len() {
+                    $.get('/command/lang', function (data) {
+                        location.reload()
+                    })
+                }
             </script>
         </div>
     </header>
     <div class="login-main-text">
-        <h2  th:text="#{Cinema}">Cinema</h2>
-        <h2  th:text="#{Register_Page}">Register Page</h2>
+        <h2 th:text="#{Cinema}">Cinema</h2>
+        <h2 th:text="#{Register_Page}">Register Page</h2>
         <p th:text="#{Register_from_here_to_access}">Register from here to access.</p>
         <!--/*@thymesVar id="message" type=""*/-->
-        <div  th:each="item : ${message}">
+        <div th:each="item : ${message}">
             <span th:text="#{${item}}"> </span>
         </div>
     </div>
@@ -39,7 +43,8 @@
 
                 <div class="form-group">
                     <label th:text="#{User_Name}">User Name</label>
-                    <input type="text" name="username" class="form-control" th:placeholder="#{User_Name}" placeholder="User Name">
+                    <input type="text" name="username" class="form-control" th:placeholder="#{User_Name}"
+                           placeholder="User Name">
                 </div>
                 <div class="form-group">
                     <label th:text="#{Email}">Email</label>
@@ -47,11 +52,13 @@
                 </div>
                 <div class="form-group">
                     <label th:text="#{Password}">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" th:placeholder="#{Password}" placeholder="Password">
+                    <input type="password" name="password" id="password" class="form-control"
+                           th:placeholder="#{Password}" placeholder="Password">
                 </div>
                 <div class="form-group">
                     <label th:text="#{Confirm_Password}">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirm_password" th:placeholder="#{Confirm_Password}" placeholder="Confirm Password" onkeyup='check();'>
+                    <input type="password" class="form-control" id="confirm_password"
+                           th:placeholder="#{Confirm_Password}" placeholder="Confirm Password" onkeyup='check();'>
                     <span id='message'></span>
                 </div>
                 <button type="submit" class="btn btn-black" th:text="#{Register}">Register</button>
@@ -60,8 +67,15 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">(function(){window['__CF$cv$params']={r:'6d5a86e8c8761622',m:'wxVC58W2Ck_KDJ3.M7X_TBEcFLBFrOBrIY3yqYgbcOM-1643543891-0-ATE8Sp5A6OcqsRbi7fme+bKto1+VgiY/ciB/rSJ6R3TISZWB2Q+V1bX/0J6uMaA/9verTEq4w0w25A8xGyhCU/thiVC8iz5XaegJvLrpu2D0OPl2fb01HjAluSmfneQtrcCPUCx9oqdofpDDjP94a0pe9VTajoRhLYHmtGEoWJEkh0XDUZvtW5uDtpKbAxSQz/6Hl/sdfbzInZ9tVX7JBuM=',s:[0x09b1881733,0xdc94061b33],}})();</script></body>
-<script>var check = function() {
+<script type="text/javascript">(function () {
+    window['__CF$cv$params'] = {
+        r: '6d5a86e8c8761622',
+        m: 'wxVC58W2Ck_KDJ3.M7X_TBEcFLBFrOBrIY3yqYgbcOM-1643543891-0-ATE8Sp5A6OcqsRbi7fme+bKto1+VgiY/ciB/rSJ6R3TISZWB2Q+V1bX/0J6uMaA/9verTEq4w0w25A8xGyhCU/thiVC8iz5XaegJvLrpu2D0OPl2fb01HjAluSmfneQtrcCPUCx9oqdofpDDjP94a0pe9VTajoRhLYHmtGEoWJEkh0XDUZvtW5uDtpKbAxSQz/6Hl/sdfbzInZ9tVX7JBuM=',
+        s: [0x09b1881733, 0xdc94061b33],
+    }
+})();</script>
+</body>
+<script>var check = function () {
     if (document.getElementById('password').value ==
         document.getElementById('confirm_password').value) {
         document.getElementById('message').style.color = 'green';

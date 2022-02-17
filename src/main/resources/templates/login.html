@@ -16,24 +16,27 @@
 <body>
 
 
-
 <div class="sidenav">
     <header class="header">
         <div class="lang_buttons">
             <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
             <script>
-                function swap_len(){$.get('/command/lang',function (data){location.reload()})}
+                function swap_len() {
+                    $.get('/command/lang', function (data) {
+                        location.reload()
+                    })
+                }
             </script>
         </div>
     </header>
     <div class="login-main-text">
-        <h2  th:text="#{Cinema}">Cinema</h2>
-        <h2  th:text="#{Login_Page}">Login Page</h2>
+        <h2 th:text="#{Cinema}">Cinema</h2>
+        <h2 th:text="#{Login_Page}">Login Page</h2>
         <p th:text="#{Login_here}">Login here to access.</p>
         <div th:if="${param.error}" th:text="#{Invalid_username}">>
             Invalid username and password.
         </div>
-        <div th:if="${param.logout}" th:text="#{You_have_been_logged_out}" >
+        <div th:if="${param.logout}" th:text="#{You_have_been_logged_out}">
             You have been logged out.
         </div>
     </div>
@@ -44,11 +47,13 @@
             <form th:action="@{/login}" method="post">
                 <div class="form-group">
                     <label th:text="#{User_Name}">User Name</label>
-                    <input type="text" name="username" class="form-control" th:placeholder="#{User_Name}"placeholder="User Name">
+                    <input type="text" name="username" class="form-control" th:placeholder="#{User_Name}"
+                           placeholder="User Name">
                 </div>
                 <div class="form-group">
                     <label th:text="#{Password}">Password</label>
-                    <input type="password" name="password" class="form-control" th:placeholder="#{Password}"placeholder="Password">
+                    <input type="password" name="password" class="form-control" th:placeholder="#{Password}"
+                           placeholder="Password">
                 </div>
                 <button type="submit" class="btn btn-black" th:text="#{Login}">Login</button>
                 <a href="register" class="btn btn-secondary" th:text="#{Unregistered}">Unregistered? Register</a>
@@ -56,6 +61,13 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">(function(){window['__CF$cv$params']={r:'6d5a872b8b8d1622',m:'i.N0ZiVBOBM7SlHANmBW4hYsR6I3aloryehfr3dF_1s-1643543902-0-AfPCccCtyV/PrtgFI/Lc9uygo9Mla1jjhF82QbYhlvbEtRDVhI6/9Jwr0MHEyDV329eAHG9cU2VHOSc6C43Bdvg12aFkZRH2CiHug9c+8l61Ekv3IRWcq6sUJW+0xxZVSopPrmOcYPl3jNkxaIiSGvqchC636Krv6quLh4tD8HgQezHpnB6w1+AOlxx3MsQAjA==',s:[0x681bed3199,0x57cc196c1f],}})();</script></body>
+<script type="text/javascript">(function () {
+    window['__CF$cv$params'] = {
+        r: '6d5a872b8b8d1622',
+        m: 'i.N0ZiVBOBM7SlHANmBW4hYsR6I3aloryehfr3dF_1s-1643543902-0-AfPCccCtyV/PrtgFI/Lc9uygo9Mla1jjhF82QbYhlvbEtRDVhI6/9Jwr0MHEyDV329eAHG9cU2VHOSc6C43Bdvg12aFkZRH2CiHug9c+8l61Ekv3IRWcq6sUJW+0xxZVSopPrmOcYPl3jNkxaIiSGvqchC636Krv6quLh4tD8HgQezHpnB6w1+AOlxx3MsQAjA==',
+        s: [0x681bed3199, 0x57cc196c1f],
+    }
+})();</script>
+</body>
 </html>
 

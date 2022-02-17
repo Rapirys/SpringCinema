@@ -7,34 +7,44 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <style>
-        body{
+        body {
             background: #ddeefc;
             font-family: "Source Sans Pro", sans-serif;
             font-size: 16px;
         }
-        .center{
-            position:absolute;
-            width:100%;
-            top:10%;
+
+        .center {
+            position: absolute;
+            width: 100%;
+            top: 10%;
             text-align: center;
             font-size: 400%;
         }
     </style>
     <style th:if="${exist}">
-        body{ background-color: green}
+        body {
+            background-color: green
+        }
     </style>
     <style th:unless="${exist}">
-        body{ background-color: red}
+        body {
+            background-color: red
+        }
     </style>
 </head>
 <body>
 <header class="header">
-    <form  th:action="@{/logout}" method="post"> <input type="image" img class="hbtn"  src="../static/img/logout.png"> </form>
+    <form th:action="@{/logout}" method="post"><input type="image" img class="hbtn" src="../static/img/logout.png">
+    </form>
     <div class="lang_buttons">
         <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
     </div>
     <script>
-        function swap_len(){$.get('/command/lang',function (data){location.reload()})}
+        function swap_len() {
+            $.get('/command/lang', function (data) {
+                location.reload()
+            })
+        }
     </script>
 </header>
 <div class="center">

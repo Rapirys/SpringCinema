@@ -17,7 +17,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../static/css/table.css">
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
@@ -29,16 +29,24 @@
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-4">
-                    <h2> <th:block th:text="#{Sessions}"/>  <b th:text="#{Details}">Details</b></h2>
+                    <h2>
+                        <th:block th:text="#{Sessions}"/>
+                        <b th:text="#{Details}">Details</b></h2>
                 </div>
                 <div class="col-sm-8">
-                    <a href="/admin/film" class="btn btn-primary"><i class="material-icons">&#xE863;</i> <span th:text="#{Movie}">Refresh List</span></a>
-                    <form  th:action="@{/logout}" method="post"> <input type="image" img class="hbtn"  src="../static/img/logout.png"> </form>
+                    <a href="/admin/film" class="btn btn-primary"><i class="material-icons">&#xE863;</i> <span
+                            th:text="#{Movie}">Refresh List</span></a>
+                    <form th:action="@{/logout}" method="post"><input type="image" img class="hbtn"
+                                                                      src="../static/img/logout.png"></form>
                     <div class="lang_buttons">
                         <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
                     </div>
                     <script>
-                        function swap_len(){$.get('/command/lang',function (data){location.reload()})}
+                        function swap_len() {
+                            $.get('/command/lang', function (data) {
+                                location.reload()
+                            })
+                        }
                     </script>
                 </div>
             </div>
@@ -46,16 +54,17 @@
         <!--            -->
         <div class="table-filter">
             <form method="post" th:action="@{/admin/session/add}">
-            <div class="row">
-                <div class="col-sm-10">
-                </div>
-                <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-10">
+                    </div>
+                    <div class="col-sm-12">
                         <button type="submit" class="btn btn-primary"><b>+</b></button>
                         <div class="filter-group">
                             <label th:text="#{Movie}">Movie</label>
                             <input type="text" list="film" class="form-control" name="film_id" required>
                             <datalist id="film">
-                                <option th:each="film : ${films}" th:value="${film.film_id}" th:text="${film.titleEn}"></option>
+                                <option th:each="film : ${films}" th:value="${film.film_id}"
+                                        th:text="${film.titleEn}"></option>
                             </datalist>
                         </div>
                         <div class="filter-group">
@@ -64,14 +73,16 @@
                         </div>
                         <div class="filter-group">
                             <label th:text="#{Time}">Duration</label>
-                            <input type="time" class="form-control" name="time" required >
+                            <input type="time" class="form-control" name="time" required>
                         </div>
-                    <label th:text="#{From}" >From</label>
-                    <input name="date1" type="date" th:value="${#temporals.format(currentDate, 'yyyy-MM-dd')}"  th:min="${#temporals.format(currentDate, 'yyyy-MM-dd')}">
-                    <label th:text="#{To}">To</label>
-                    <input name="date2" type="date" th:value="${#temporals.format(currentDate, 'yyyy-MM-dd')}"  th:min="${#temporals.format(currentDate, 'yyyy-MM-dd')}">
+                        <label th:text="#{From}">From</label>
+                        <input name="date1" type="date" th:value="${#temporals.format(currentDate, 'yyyy-MM-dd')}"
+                               th:min="${#temporals.format(currentDate, 'yyyy-MM-dd')}">
+                        <label th:text="#{To}">To</label>
+                        <input name="date2" type="date" th:value="${#temporals.format(currentDate, 'yyyy-MM-dd')}"
+                               th:min="${#temporals.format(currentDate, 'yyyy-MM-dd')}">
+                    </div>
                 </div>
-            </div>
             </form>
         </div>
         <!--            -->
@@ -82,7 +93,7 @@
                     <div class="col-sm-3">
                         <div class="show-entries">
                             <span>Show</span>
-                            <select  name="quantity" class="form-control">
+                            <select name="quantity" class="form-control">
                                 <option th:each="i : ${#numbers.sequence(5,20,5)}" th:value="${i}" th:text="${i}"
                                         th:selected="${i==quantity}"></option>
                             </select>
@@ -97,7 +108,7 @@
                         </div>
                         <div class="filter-group">
                             <label th:text="#{Sorting}">Sorting</label>
-                            <select  name="sort" class="form-control">
+                            <select name="sort" class="form-control">
                                 <option value="film.titleEn" th:text="#{Title}"></option>
                                 <option selected="selected" value="time" th:text="#{Time}">Time</option>
                                 <option value="occupancy" th:text="#{Occupancy}"></option>
@@ -108,9 +119,10 @@
                             <label th:text="#{Status}">Status</label>
                             <select name="status" class="form-control">
                                 <option value="Any" th:text="#{Any}">Any</option>
-<!--                                <option selected="selected" value="movie_is_on_now" th:text="#{Movie_is_on_now}"></option>-->
+                                <!--                                <option selected="selected" value="movie_is_on_now" th:text="#{Movie_is_on_now}"></option>-->
                                 <option value="movie_is_passed" th:text="#{Movie_is_passed}"></option>
-                                <option selected="selected" value="movie_will_be_shown" th:text="#{Movie_will_be_shown}"></option>
+                                <option selected="selected" value="movie_will_be_shown"
+                                        th:text="#{Movie_will_be_shown}"></option>
                             </select>
                         </div>
                         <div class="filter-group">
@@ -120,7 +132,7 @@
                                 <option selected="selected" value="false" th:text="#{Descending}">descending</option>
                             </select>
                         </div>
-                        <span class="filter-icon" ><i class="fa fa-filter"></i></span>
+                        <span class="filter-icon"><i class="fa fa-filter"></i></span>
                     </div>
                 </div>
             </form>
@@ -148,7 +160,7 @@
             <tbody>
             <tr th:each="row,i: ${sessions}" th:id="${i.index}">
                 <td th:text="${i.index + (page - 1)*quantity}"></td>
-                <td >
+                <td>
                     <a th:text="${row.film.titleEn}" th:href="${'/admin/film?search='+row.film.titleEn}"/>
                 </td>
                 <td th:text="${row.date}">Date</td>
@@ -156,15 +168,15 @@
                 <td th:text="${row.occupancy}+'/'+${hallCapacity}">Occupancy</td>
                 <td th:text="${row.price}">Price</td>
                 <td>
-                    <th:block th:if="${row.isOnNow()}" >
+                    <th:block th:if="${row.isOnNow()}">
                         <span class="status text-warning">&bull;</span>
                         <label th:text="#{Movie_is_on_now}"></label>
                     </th:block>
-                    <th:block th:if="${row.isPassed()}" >
+                    <th:block th:if="${row.isPassed()}">
                         <span class="status text-danger">&bull;</span>
                         <label th:text="#{Movie_is_passed}"></label>
                     </th:block>
-                    <th:block th:if="${row.willBeShown()}" >
+                    <th:block th:if="${row.willBeShown()}">
                         <span class="status text-success">&bull;</span>
                         <label th:text="#{Movie_will_be_shown}"></label>
                     </th:block>
@@ -172,7 +184,8 @@
                 </td>
 
                 <td>
-                    <a href="#" th:onclick="'delete_session('+${row.getSession_id()}+','+${i.index}+')'" class="view" th:title="#{Delete}" data-toggle="tooltip">
+                    <a href="#" th:onclick="'delete_session('+${row.getSession_id()}+','+${i.index}+')'" class="view"
+                       th:title="#{Delete}" data-toggle="tooltip">
                         <i class="material-icons">delete</i>
                     </a>
                 </td>
@@ -181,16 +194,23 @@
             </tbody>
         </table>
         <script>
-            function delete_session(id1,id2) {
-                $.get("/admin/session/delete?id="+id1,function (data){
-                document.getElementById(id2).remove();
-            })
+            function delete_session(id1, id2) {
+                $.get("/admin/session/delete?id=" + id1, function (data) {
+                    document.getElementById(id2).remove();
+                })
             }</script>
         <div class="clearfix">
-            <ul class="pagination" th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
-                <li th:if="${page>1}" class="page-item disabled"><a th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page - 1).toUriString()}" th:text="#{Previous}">Previous</a></li>
-                <li class="page-item active"><button href="#" class="page-link" th:text="${page}"></button></li>
-                <li class="page-item disabled"><a th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page + 1).toUriString()}" th:text="#{Next}">Next</a></li>
+            <ul class="pagination"
+                th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
+                <li th:if="${page>1}" class="page-item disabled"><a
+                        th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page - 1).toUriString()}"
+                        th:text="#{Previous}">Previous</a></li>
+                <li class="page-item active">
+                    <button href="#" class="page-link" th:text="${page}"></button>
+                </li>
+                <li class="page-item disabled"><a
+                        th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page + 1).toUriString()}"
+                        th:text="#{Next}">Next</a></li>
             </ul>
         </div>
     </div>

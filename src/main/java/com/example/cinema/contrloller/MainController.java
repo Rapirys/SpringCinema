@@ -71,8 +71,6 @@ public class MainController {
         return "zero_films";
     }
 
-
-
     @GetMapping("/command/lang")
     public ResponseEntity<?> lang(HttpServletRequest request, HttpServletResponse response){
         cookieManager.changLang();

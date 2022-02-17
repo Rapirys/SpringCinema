@@ -16,6 +16,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
+/**
+ * Service for performing sorting and pagination when interacting with the database
+ */
 @Service
 public class SortManager {
     @Autowired
@@ -25,6 +28,13 @@ public class SortManager {
     @Autowired
     HallTopology hallTopology;
 
+    /**
+     * @param search Substring to search.
+     * @param sort DB column name.
+     * @param status  "Any" or "at_box_office"
+     * @param desc Ascending or descending true=descending.
+     * @return Sorted list of movies matching the parameters.
+     */
     public List<Film> findFilms(String search, String sort, String status, int page, int quantity, boolean desc) {
         Sort sortPattern;
         sortPattern = getDirection(desc, Sort.by(sort));
@@ -37,6 +47,13 @@ public class SortManager {
         else return  filmRepository.findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeFalse(search,search, pageable);
     }
 
+    /**
+     * @param search Substring to search.
+     * @param sort DB column name.
+     * @param status  Any or Movie_is_passed or Movie_will_be_shown.
+     * @param direction Ascending or descending true=descending.
+     * @return Sorted list of Session matching the parameters.
+     */
     public List<Session> findSession(String search, String sort, String status, int page, int quantity, boolean direction) {
         Sort sortPattern;
         if (sort.equals("time")) {
@@ -70,6 +87,11 @@ public class SortManager {
     }
 
 
+    /**
+     Use to add sessions, guarantees uniqueness.
+     * @param prototype Session entity with film, price, and time fields initialized.
+     * @return Empty if no collisions are found, or containing a list of collisions if any
+     */
     public Optional<List<Session>> findSessionCollisionOrSave(LocalDate date1, LocalDate date2, Session prototype) {
         LocalTime time1=prototype.getTime();
         LocalTime time2=time1.plus(prototype.getFilm().getDuration());
@@ -101,6 +123,14 @@ public class SortManager {
         return sessionRepository.findAllBetween(film,date1,LocalTime.now(),occupancy,sort);
     }
 
+    /**
+     Used to get a list of movies on the main page.
+     Associates a movie title with a table of sessions.
+     * @param sort_session  The name of the column in the database on which the sorting takes place.
+     * @param sortFilm movie sorting option, time or capacity
+     * @param availability   Are there any empty seats in the room? If true then full halls will be discarded.
+     * @return associate movies with a table of screenings by date
+     */
     public HashMap<Film, List<List<Session>>> tableSessionByFilm(LinkedList<Film> films,String sort_session, String sortFilm, LocalDate date1, LocalDate date2, boolean availability) {
         HashMap<Film, List<List<Session>>> rezalt=new HashMap<>();
         for(Iterator<Film> iterator = films.iterator(); iterator.hasNext();){

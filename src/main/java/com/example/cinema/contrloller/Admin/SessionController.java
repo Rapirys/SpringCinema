@@ -43,11 +43,11 @@ public class SessionController {
 
     @GetMapping
     public String session(@RequestParam(name = "search", defaultValue = "") String search,
-                         @RequestParam(name ="sort", defaultValue = "time") String sort,
-                         @RequestParam(name = "status", defaultValue = "Any") String status,
-                         @RequestParam(name = "direction", defaultValue = "false") boolean direction,
-                         @RequestParam (name="page", defaultValue = "1") int page,
-                         @RequestParam (name="quantity", defaultValue = "10") int quantity, Model model) {
+                          @RequestParam(name ="sort", defaultValue = "time") String sort,
+                          @RequestParam(name = "status", defaultValue = "Any") String status,
+                          @RequestParam(name = "direction", defaultValue = "false") boolean direction,
+                          @RequestParam (name="page", defaultValue = "1") int page,
+                          @RequestParam (name="quantity", defaultValue = "10") int quantity, Model model) {
         List<Film> films = filmRepository.findByBoxOfficeTrueOrderByTitleEn();
         model.addAttribute("films", films);
         List<Session> sessions =sortManager.findSession(search, sort, status, page,quantity, direction);
@@ -59,8 +59,6 @@ public class SessionController {
         model.addAttribute("page",page);
         model.addAttribute("quantity",quantity);
         model.addAttribute("search",search);
-
-
         return "session";
     }
     @PostMapping("/add")
