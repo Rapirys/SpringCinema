@@ -1,6 +1,5 @@
 
 ## Кінтоеатр
-***
 The project was created as a test project for EPAM in JAVA ONLINE PROGRAM courses.
 The purpose of the project is practice and demonstration of work skills.
 ***
