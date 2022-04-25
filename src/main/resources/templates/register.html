@@ -43,17 +43,16 @@
 
                 <div class="form-group">
                     <label th:text="#{User_Name}">User Name</label>
-                    <input type="text" name="username" class="form-control" th:placeholder="#{User_Name}"
-                           placeholder="User Name">
+                    <input type="text" name="username" class="form-control" th:placeholder="#{User_Name}">
                 </div>
                 <div class="form-group">
                     <label th:text="#{Email}">Email</label>
-                    <input type="email" name="email" class="form-control" th:placeholder="#{Email}" placeholder="Email">
+                    <input type="email" name="email" class="form-control" th:placeholder="#{Email}">
                 </div>
                 <div class="form-group">
                     <label th:text="#{Password}">Password</label>
                     <input type="password" name="password" id="password" class="form-control"
-                           th:placeholder="#{Password}" placeholder="Password">
+                           th:placeholder="#{Password}">
                 </div>
                 <div class="form-group">
                     <label th:text="#{Confirm_Password}">Confirm Password</label>
@@ -76,7 +75,7 @@
 })();</script>
 </body>
 <script>var check = function () {
-    if (document.getElementById('password').value ==
+    if (document.getElementById('password').value ===
         document.getElementById('confirm_password').value) {
         document.getElementById('message').style.color = 'green';
         document.getElementById('message').innerHTML = 'matching';

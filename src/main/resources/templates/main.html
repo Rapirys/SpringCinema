@@ -32,7 +32,8 @@
     <script>
         function swap_len() {
             $.get('/command/lang', function (data) {
-                location.reload()
+                console.log(data.toString());
+                //location.reload()
             })
         }
 

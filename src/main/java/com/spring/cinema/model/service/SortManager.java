@@ -97,8 +97,8 @@ public class SortManager {
         LocalTime time2=time1.plus(prototype.getFilm().getDuration());
         List<Session> collision = new LinkedList<>();
         for (Session session: sessionRepository.findSessionCollision(date1, date2)) {
-            if ((time1.isBefore(session.getTime()) && time2.isAfter(session.getTime())) ||
-                (time1.isBefore(session.getEndTime()) && time2.isAfter(session.getEndTime())))
+            if ((time1.minusSeconds(30).isBefore(session.getTime()) && time2.plusSeconds(30).isAfter(session.getTime())) ||
+                (time1.minusSeconds(30).isBefore(session.getEndTime()) && time2.plusSeconds(30).isAfter(session.getEndTime())))
                 collision.add(session);
         }
         if (collision.size()!=0)
@@ -114,7 +114,7 @@ public class SortManager {
 
     public LinkedList<Film> findSimpleFilms(String search, String sort_film) {
         Sort sort=Sort.by(sort_film).descending();
-        return filmRepository.findAllByTitleEnContainsOrTitleRu(search,search, sort);
+        return filmRepository.findAllByTitleEnContainsOrTitleRuContains(search,search, sort);
     }
 
     public List<Session> findSimpleSession(Film film, String sort_session, LocalDate date1, boolean availability) {

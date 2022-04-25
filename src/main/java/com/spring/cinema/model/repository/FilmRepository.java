@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository
 public interface FilmRepository extends CrudRepository<Film, Long> {
-    LinkedList<Film> findAllByTitleEnContainsOrTitleRu(String titleEn, String titleRu, Sort sort);
+    LinkedList<Film> findAllByTitleEnContainsOrTitleRuContains(String titleEn, String titleRu, Sort sort);
     List<Film> findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeTrue(String search_ru, String search_en,Pageable pageable);
     List<Film> findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeFalse(String search_ru, String search_en,Pageable pageable);
     List<Film> findAllByTitleEnContainsOrTitleRuContains(String titleEn, String titleRu,Pageable pageable);

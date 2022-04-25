@@ -42,7 +42,6 @@ public class MainController {
                        @RequestParam(name = "sort_film", defaultValue = "titleEn") String sort_film,
                        @RequestParam(name="date1", required = false) LocalDate date1,
                        @RequestParam(name="date2", required = false) LocalDate date2) {
-        System.out.println(date1);
         LinkedList<Film> films=sortManager.findSimpleFilms(search,sort_film);
         date1=validator.toValidDate(date1,0);
         date2=validator.toValidDate(date2,7);
@@ -74,6 +73,4 @@ public class MainController {
     public void newEntity(Model model)
     {
         model.addAttribute("localDate", LocalDate.now());
-    }
-
-}
+    }}
