@@ -32,11 +32,9 @@
     <script>
         function swap_len() {
             $.get('/command/lang', function (data) {
-                console.log(data.toString());
-                //location.reload()
+                location.reload()
             })
         }
-
         function show_menu() {
             var element = document.getElementById("menu");
             if (element.style.visibility === 'visible') {
@@ -54,21 +52,21 @@
         <div class="choose">
             <div class="availability">
                 <input type="checkbox" name="availability">
-                <label>Доступность</label>
+                <label th:text="#{Availability}">Доступность</label>
             </div>
             <div class="sort_session">
-                <p>По сеансам</p>
+                <p th:text="#{By_sessions}">По сеансам</p>
                 <input type="radio" name="session" value="occupancy">
-                <label>Количество мест</label>
+                <label th:text="#{Occupancy}">Количество мест</label>
                 <input type="radio" name="session" value="time">
-                <label>Время</label>
+                <label th:text=" #{Time}">Время</label>
             </div>
             <div class="sort_film">
-                <p>По фильмам</p>
+                <p th:text="#{By_films}">По фильмам</p>
                 <input type="radio" name="films" th:value="'title'+#{locale}">
-                <label>Название</label>
+                <label th:text="#{Title}">Название</label>
                 <input type="radio" name="films" value="duration">
-                <label>Длительность</label>
+                <label th:text="#{Duration}">Длительность</label>
             </div>
             <div class="date">
                 <input id="date1" name=date1 type="date" th:value="${#temporals.format(localDate, 'yyyy-MM-dd')}"

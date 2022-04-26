@@ -36,8 +36,7 @@
                 <div class="col-sm-8">
                     <a href="/admin/session" class="btn btn-primary"><i class="material-icons">&#xE863;</i> <span
                             th:text="#{Session}">Refresh List</span></a>
-                    <form th:action="@{/logout}" method="post"><input type="image" img class="hbtn"
-                                                                      src="../static/img/logout.png"></form>
+                    <form th:action="@{/logout}" method="post"><input type="image" img class="hbtn" src="../static/img/logout.png"></form>
                     <div class="lang_buttons">
                         <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
                     </div>
@@ -173,7 +172,8 @@
         <script>
             function delete_film(id1, id2) {
                 $.get("/admin/film/delete?id=" + id1, function (data) {
-                    document.getElementById(id2).remove();
+                    //document.getElementById(id2).remove();
+                    location.reload()
                 })
             }
 

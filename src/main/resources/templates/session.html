@@ -196,7 +196,8 @@
         <script>
             function delete_session(id1, id2) {
                 $.get("/admin/session/delete?id=" + id1, function (data) {
-                    document.getElementById(id2).remove();
+                    //document.getElementById(id2).remove();
+                    location.reload()
                 })
             }</script>
         <div class="clearfix">
