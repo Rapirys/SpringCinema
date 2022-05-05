@@ -15,7 +15,8 @@ The purpose of the project is practice and demonstration of work skills.
 Дані для підключення у application.properties.
 
 Спрінгова версія проєкту. 
-Сервлетна версія: https://github.com/Rapirys/SpringCinema#readme
+
+Сервлетна версія:https://github.com/Rapirys/ServletCinema
 
 
 
