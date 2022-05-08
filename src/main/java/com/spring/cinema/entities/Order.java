@@ -1,5 +1,8 @@
 package com.spring.cinema.entities;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "session_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Session session;
     private LocalDateTime time;
     private boolean active;

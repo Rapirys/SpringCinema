@@ -1,5 +1,8 @@
 package com.spring.cinema.entities;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +17,7 @@ public class Session {
 
     @ManyToOne
     @JoinColumn(name = "film_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Film film;
 
     private LocalDate date;

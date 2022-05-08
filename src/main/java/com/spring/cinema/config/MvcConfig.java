@@ -10,7 +10,9 @@ import org.springframework.format.FormatterRegistry;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -30,7 +32,6 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
-
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login.html");
     }
@@ -39,6 +40,8 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/upload/**")
+                .addResourceLocations("file:///" + System.getProperty("user.dir") + "/src/main/upload/");
     }
 
     @Bean

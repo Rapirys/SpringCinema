@@ -35,6 +35,7 @@
                 location.reload()
             })
         }
+
         function show_menu() {
             var element = document.getElementById("menu");
             if (element.style.visibility === 'visible') {
@@ -47,7 +48,7 @@
 </header>
 <div class="d2" id="menu" style="visibility: hidden">
     <form method="get" th:action="@{/}">
-        <input name="search" type="text" placeholder="Искать здесь...">
+        <input name="search" type="text" placeholder="...">
         <button type="submit"></button>
         <div class="choose">
             <div class="availability">
@@ -82,7 +83,7 @@
 <div class="slider" id="slider">
     <div class="slItems">
         <th:block th:each="film,i: ${films}">
-            <div class="slItem" th:style="'background-image: url(\'../static/posters/'+${film.film_id}+'.jpeg\')'">
+            <div class="slItem" th:style="'background-image: url(/upload/'+${film.film_id}+'.jpeg)'">
                 <div class="title" th:switch="#{locale}">
                     <h1 th:case="'Ru'" th:text="${film.titleRu}"/>
                     <h1 th:case="'En'" th:text="${film.titleEn}"/>

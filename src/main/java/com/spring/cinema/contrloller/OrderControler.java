@@ -42,8 +42,7 @@ public class OrderControler {
     SessionRepository sessionRepository;
     @Autowired
     TicketRepository ticketRepository;
-    @Autowired
-    HallTopology hallTopology;
+
     @GetMapping("/place")
     public String place(Model model, HttpServletRequest request
                        ,@RequestParam(name = "id") Long id) {
@@ -113,7 +112,6 @@ public class OrderControler {
        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
        if (!order.getUser().getUsername().equals(auth.getName()))
            return "redirect:/";
-        model.addAttribute("mail", order.getUser().getEmail());
         model.addAttribute("id", order.getOrder_id());
         return "download";
    }

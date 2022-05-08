@@ -16,6 +16,8 @@ public class Ticket {
     private Long ticket_id;
 
 
+
+
     @ManyToOne
     @JoinColumn(name = "order_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -23,6 +25,7 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "session_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Session session;
     private int  place;
     private int row;

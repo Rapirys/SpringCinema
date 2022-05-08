@@ -107,7 +107,8 @@
         }
     </script>
 </header>
-<img class="poster" th:src="'../static/posters/'+${mySession.film.film_id}+'.jpeg'"/>
+<img class="poster" th:src="'/upload/'+${mySession.film.film_id}+'.jpeg'"/>
+
 <div class="title" th:switch="#{locale}">
     <p th:text="#{Сhoice_of_seats}"/>
     <label th:case="'Ru'" th:text="${mySession.getFilm().getTitleRu()}"/>

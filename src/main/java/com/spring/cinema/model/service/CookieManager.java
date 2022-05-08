@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
 /**
- *
  Used for easy access to cookies,
  must be called from the controller or request scope.
  */

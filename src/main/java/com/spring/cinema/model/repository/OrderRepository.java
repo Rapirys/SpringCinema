@@ -15,5 +15,4 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
     @Transactional
     @Modifying
     void deleteBySessionAndActiveFalseAndTimeBefore(Session session, LocalDateTime localDateTime);
-
 }
