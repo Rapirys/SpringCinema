@@ -65,14 +65,11 @@ public class SortManager {
             sortPattern = getDirection(direction, sortPattern);
         }
         Pageable pageable = PageRequest.of(page - 1, quantity, sortPattern);
-        switch (status) {
-            case "Any":
-                return sessionRepository.findAllByFilmTitleEnContains(search, pageable);
-            case "movie_is_passed":
-                return sessionRepository.findAllByFilmTitleEnContainsAndPast(LocalTime.now(), search, pageable);
-            default:
-                return sessionRepository.findAllByFilmTitleEnContainsAndWillBeShown(LocalTime.now(), search, pageable);
-        }
+        return switch (status) {
+            case "Any" -> sessionRepository.findAllByFilmTitleEnContains(search, pageable);
+            case "movie_is_passed" -> sessionRepository.findAllByFilmTitleEnContainsAndPast(LocalTime.now(), search, pageable);
+            default -> sessionRepository.findAllByFilmTitleEnContainsAndWillBeShown(LocalTime.now(), search, pageable);
+        };
 
     }
 
@@ -130,11 +127,10 @@ public class SortManager {
      * Associates a movie title with a table of sessions.
      *
      * @param sort_session The name of the column in the database on which the sorting takes place.
-     * @param sortFilm     movie sorting option, time or capacity
      * @param availability Are there any empty seats in the room? If true then full halls will be discarded.
      * @return associate movies with a table of screenings by date
      */
-    public HashMap<Film, List<List<Session>>> tableSessionByFilm(LinkedList<Film> films, String sort_session, String sortFilm, LocalDate date1, LocalDate date2, boolean availability) {
+    public HashMap<Film, List<List<Session>>> tableSessionByFilm(LinkedList<Film> films, String sort_session, LocalDate date1, LocalDate date2, boolean availability) {
         HashMap<Film, List<List<Session>>> rezalt = new HashMap<>();
         for (Iterator<Film> iterator = films.iterator(); iterator.hasNext(); ) {
             Film film = iterator.next();
@@ -143,8 +139,8 @@ public class SortManager {
             while (date2.compareTo(dateT) >= 0) {
                 List<Session> sessionsAtDey = findSimpleSession(film, sort_session, dateT, availability);
                 if (sessionsAtDey.size() != 0) {
-                    if (!sortFilm.equals("time"))
-                        sessionsAtDey.sort(Comparator.comparingLong(Session::getOccupancy));
+                    if (!sort_session.equals("time"))
+                        sessionsAtDey.sort(Comparator.comparingLong(Session::getOccupancy).thenComparing(Session::getTime));
                     sessionsByFilm.add(sessionsAtDey);
                 }
                 dateT = dateT.plusDays(1);
