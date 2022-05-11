@@ -1,27 +1,32 @@
 package com.spring.cinema.entities;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.Duration;
 import java.util.Objects;
 
 @Entity
 public class Film {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long film_id;
     private String titleRu;
     private String titleEn;
     private Duration duration;
-    private boolean boxOffice =true;
+    private boolean boxOffice = true;
     //Path to img=(title_en).jpg
 
 
-    public String getTitleLocale(String locale){
-        return (locale.equals("en"))?getTitleEn():getTitleRu();
+    public String getTitleLocale(String locale) {
+        return (locale.equals("en")) ? getTitleEn() : getTitleRu();
     }
-    public String getFormatDuration(){
-        return String.format("%02d",duration.toHours())+':'+String.format("%02d",duration.toMinutesPart());
+
+    public String getFormatDuration() {
+        return String.format("%02d", duration.toHours()) + ':' + String.format("%02d", duration.toMinutesPart());
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

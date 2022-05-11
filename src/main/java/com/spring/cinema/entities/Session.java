@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @Table(indexes = @Index(name = "date_index", columnList = "date"))
 public class Session {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long session_id;
 
     @ManyToOne
@@ -25,18 +25,19 @@ public class Session {
 
     private int price;
 
-    private int occupancy=0;
+    private int occupancy = 0;
 
 
-    public Session(){}
+    public Session() {
+    }
 
     public Session(Session session) {
-        this.price=session.price;
-        this.time=session.time;
-        this.date=session.date;
-        this.film=session.film;
-        this.session_id=session.session_id;
-        this.occupancy=session.occupancy;
+        this.price = session.price;
+        this.time = session.time;
+        this.date = session.date;
+        this.film = session.film;
+        this.session_id = session.session_id;
+        this.occupancy = session.occupancy;
     }
 
     public Film getFilm() {
@@ -48,19 +49,22 @@ public class Session {
         return this;
     }
 
-    public LocalDateTime getLocalDateTime(){
+    public LocalDateTime getLocalDateTime() {
         return LocalDateTime.of(date, time);
     }
 
-    public boolean isPassed(){
-       return getLocalDateTime().plus(film.getDuration()).isBefore(LocalDateTime.now());
+    public boolean isPassed() {
+        return getLocalDateTime().plus(film.getDuration()).isBefore(LocalDateTime.now());
     }
-    public boolean willBeShown(){
-       return getLocalDateTime().isAfter(LocalDateTime.now());
+
+    public boolean willBeShown() {
+        return getLocalDateTime().isAfter(LocalDateTime.now());
     }
-    public boolean isOnNow(){
-       return !(isPassed() || willBeShown());
+
+    public boolean isOnNow() {
+        return !(isPassed() || willBeShown());
     }
+
     public Long getSession_id() {
         return session_id;
     }
@@ -97,15 +101,20 @@ public class Session {
         return this;
     }
 
-    public int getOccupancy() {return occupancy;}
+    public int getOccupancy() {
+        return occupancy;
+    }
 
-    public Session setOccupancy(int occupancy) {this.occupancy = occupancy; return this;   }
+    public Session setOccupancy(int occupancy) {
+        this.occupancy = occupancy;
+        return this;
+    }
 
     public LocalTime getEndTime() {
         return time.plus(film.getDuration());
     }
 
     public void incOccupancy(int n) {
-        occupancy=occupancy+n;
+        occupancy = occupancy + n;
     }
 }

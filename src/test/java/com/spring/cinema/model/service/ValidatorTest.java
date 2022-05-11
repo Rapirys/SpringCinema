@@ -9,37 +9,42 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 class ValidatorTest {
     @Autowired
     Validator valid;
+
     @Test
     void nullEmail() {
-        assertFalse (valid.email(null));
+        assertFalse(valid.email(null));
     }
+
     @Test
     void validEmail() {
-        assertTrue (valid.email("gregor@gmail.com"));
-        assertTrue (valid.email("gregordsadasfasfasfa@gmail.com"));
+        assertTrue(valid.email("gregor@gmail.com"));
+        assertTrue(valid.email("gregordsadasfasfasfa@gmail.com"));
     }
+
     @Test
     void invalidEmail() {
-        assertFalse (valid.email("gregor@gmail.commm"));
-        assertFalse (valid.email("gregor@gmail..com"));
-        assertFalse (valid.email("gregor@гмаил.com"));
+        assertFalse(valid.email("gregor@gmail.commm"));
+        assertFalse(valid.email("gregor@gmail..com"));
+        assertFalse(valid.email("gregor@гмаил.com"));
     }
+
     @Test
-    void  validPassword(){
-        assertFalse (valid.password("111Q2"));
-        assertFalse (valid.password("abcd"));
-        assertTrue (valid.password("1233456q"));
+    void validPassword() {
+        assertFalse(valid.password("111Q2"));
+        assertFalse(valid.password("abcd"));
+        assertTrue(valid.password("1233456q"));
     }
 
 
     @Test
     void invalidUsername() {
-        assertFalse (valid.email("TooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongName"));
-        assertFalse (valid.email("Д"));
+        assertFalse(valid.email("TooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongNameTooLongName"));
+        assertFalse(valid.email("Д"));
     }
 
     @Test
@@ -76,34 +81,34 @@ class ValidatorTest {
 
     @Test
     void validCard() {
-        String cardN="1111 1111 1111 1111";
-        String name="Asd Jkc";
-        String cvv="1111";
+        String cardN = "1111 1111 1111 1111";
+        String name = "Asd Jkc";
+        String cvv = "1111";
         Integer y = 2024;
-        Integer m =12;
-        assertTrue(valid.validCard(cardN, cvv , m, y, name));
+        Integer m = 12;
+        assertTrue(valid.validCard(cardN, cvv, m, y, name));
 
-        assertFalse(valid.validCard(cardN, cvv , m, 1000, name));
-        assertFalse(valid.validCard(cardN, cvv , -10, y, name));
-        assertFalse(valid.validCard(cardN, "aaa" , m, y, name));
-        assertFalse(valid.validCard("1234567812345678", cvv , m, y, name));
+        assertFalse(valid.validCard(cardN, cvv, m, 1000, name));
+        assertFalse(valid.validCard(cardN, cvv, -10, y, name));
+        assertFalse(valid.validCard(cardN, "aaa", m, y, name));
+        assertFalse(valid.validCard("1234567812345678", cvv, m, y, name));
     }
 
     @Test
     void toValidDate() {
-        assertThat(valid.toValidDate(LocalDate.now().minusDays(7),7)).isEqualTo(LocalDate.now().plusDays(7));
+        assertThat(valid.toValidDate(LocalDate.now().minusDays(7), 7)).isEqualTo(LocalDate.now().plusDays(7));
     }
 
 
     @Test
     void validUserFields() {
-        User user= new User();
+        User user = new User();
         user.setPassword("12345678q").setEmail("gregor@gmail.com").setUsername("Name");
         assertEquals(0, valid.validUserFields(user).size());
         user.setPassword("1111");
-        assertTrue(valid.validUserFields(user).size()!=0);
+        assertTrue(valid.validUserFields(user).size() != 0);
         user.setPassword("12345678q");
         user.setUsername("NameTooLongggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
-        assertTrue(valid.validUserFields(user).size()!=0);
+        assertTrue(valid.validUserFields(user).size() != 0);
     }
 }

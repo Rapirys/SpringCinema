@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class MyErrorControllerTest {
@@ -22,8 +21,8 @@ class MyErrorControllerTest {
         when(request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE)).thenReturn("404");
         try {
             Assertions.assertThat(myErrorController.handleError(request, model)).isEqualTo("error");
-        } catch (Exception e){
-            Assertions.fail("Error controller throw error" ,e);
+        } catch (Exception e) {
+            Assertions.fail("Error controller throw error", e);
         }
         verify(model).addAttribute("error", "404");
     }
@@ -33,8 +32,8 @@ class MyErrorControllerTest {
         MyErrorController myErrorController = new MyErrorController();
         try {
             Assertions.assertThat(myErrorController.handleError403()).isEqualTo("error403");
-        } catch (Exception e){
-            Assertions.fail("Error controller throw error" ,e);
+        } catch (Exception e) {
+            Assertions.fail("Error controller throw error", e);
         }
 
     }

@@ -16,10 +16,15 @@ import java.util.List;
 @Repository
 public interface FilmRepository extends CrudRepository<Film, Long> {
     LinkedList<Film> findAllByTitleEnContainsOrTitleRuContains(String titleEn, String titleRu, Sort sort);
-    List<Film> findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeTrue(String search_ru, String search_en,Pageable pageable);
-    List<Film> findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeFalse(String search_ru, String search_en,Pageable pageable);
-    List<Film> findAllByTitleEnContainsOrTitleRuContains(String titleEn, String titleRu,Pageable pageable);
+
+    List<Film> findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeTrue(String search_ru, String search_en, Pageable pageable);
+
+    List<Film> findAllByTitleEnContainsOrTitleRuContainsAndBoxOfficeFalse(String search_ru, String search_en, Pageable pageable);
+
+    List<Film> findAllByTitleEnContainsOrTitleRuContains(String titleEn, String titleRu, Pageable pageable);
+
     List<Film> findByBoxOfficeTrueOrderByTitleEn();
+
     @Transactional
     @Modifying
     @Query("update Film f set f.boxOffice=?2 where f.film_id = ?1")

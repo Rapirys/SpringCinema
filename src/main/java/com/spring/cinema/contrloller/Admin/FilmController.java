@@ -31,29 +31,29 @@ public class FilmController {
 
     @GetMapping
     public String film(@RequestParam(name = "search", defaultValue = "") String search,
-                       @RequestParam(name ="sort", defaultValue = "titleEn") String sort,
+                       @RequestParam(name = "sort", defaultValue = "titleEn") String sort,
                        @RequestParam(name = "status", defaultValue = "at_box_office") String status,
                        @RequestParam(name = "direction", defaultValue = "false") Boolean direction,
-                       @RequestParam (name="page", defaultValue = "1") Integer page,
-                       @RequestParam (name="quantity", defaultValue = "10") Integer quantity, Model model) {
-        List<Film> films = sortManager.findFilms(search, sort, status, page,quantity, direction);
-        model.addAttribute("maxPage", films.size()/quantity+1);
-        model.addAttribute("page",page);
-        model.addAttribute("quantity",quantity);
-        model.addAttribute("search",search);
+                       @RequestParam(name = "page", defaultValue = "1") Integer page,
+                       @RequestParam(name = "quantity", defaultValue = "10") Integer quantity, Model model) {
+        List<Film> films = sortManager.findFilms(search, sort, status, page, quantity, direction);
+        model.addAttribute("maxPage", films.size() / quantity + 1);
+        model.addAttribute("page", page);
+        model.addAttribute("quantity", quantity);
+        model.addAttribute("search", search);
         model.addAttribute("films", films);
         return "film_ad";
     }
 
     @PostMapping("/add")
     public String film_add(@ModelAttribute("newFilm") Film newFilm, @RequestParam("image") MultipartFile file) {
-        newFilm=filmRepository.save(newFilm);
+        newFilm = filmRepository.save(newFilm);
         try {
-            file.transferTo(new File(path+newFilm.getFilm_id()+".jpeg"));
-            logger.debug("Add new movie film_id:"+newFilm.getFilm_id());
+            file.transferTo(new File(path + newFilm.getFilm_id() + ".jpeg"));
+            logger.debug("Add new movie film_id:" + newFilm.getFilm_id());
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("Problem with loading poster for film_id:"+newFilm.getFilm_id(), e);
+            logger.error("Problem with loading poster for film_id:" + newFilm.getFilm_id(), e);
         }
         return "redirect:/admin/film";
     }
@@ -61,8 +61,8 @@ public class FilmController {
     @GetMapping("/delete")
     public ResponseEntity<HttpStatus> delete(@RequestParam("id") Long id) {
         filmRepository.deleteById(id);
-        if (new File(path+id+".jpeg").delete())
-            logger.debug("Delete movie film_id:"+id);
+        if (new File(path + id + ".jpeg").delete())
+            logger.debug("Delete movie film_id:" + id);
         else logger.warn("Problem with delete poster for film_id:+newFilm.getFilm_id()");
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
@@ -74,9 +74,8 @@ public class FilmController {
     }
 
     @ModelAttribute
-    public void newEntity(Model model)
-    {
-        model.addAttribute("newFilm",new Film());
+    public void newEntity(Model model) {
+        model.addAttribute("newFilm", new Film());
     }
 
 }

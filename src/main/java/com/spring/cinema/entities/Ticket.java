@@ -9,13 +9,11 @@ import java.util.Random;
 
 @Entity
 @Table(name = "tickets", indexes = @Index(name = "ticket_index", columnList = "order_id"),
-       uniqueConstraints = { @UniqueConstraint( columnNames = { "place", "row","session_id"} )})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"place", "row", "session_id"})})
 public class Ticket {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ticket_id;
-
-
 
 
     @ManyToOne
@@ -27,16 +25,16 @@ public class Ticket {
     @JoinColumn(name = "session_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Session session;
-    private int  place;
+    private int place;
     private int row;
     private Long salt;
 
     public Ticket(int row, int place, Order order) {
         this.place = place;
         this.row = row;
-        this.order=order;
-        this.session=order.getSession();
-        this.salt=new Random().nextLong();
+        this.order = order;
+        this.session = order.getSession();
+        this.salt = new Random().nextLong();
     }
 
 

@@ -9,7 +9,7 @@ import java.util.Objects;
  * '#'-free(default).
  * 'X'- is busy.
  */
-public class Place{
+public class Place {
     public int row, place;
     public Character type;
 
@@ -20,6 +20,7 @@ public class Place{
             this.place = place;
         }
     }
+
     public Place(Place place) {
         this.type = place.type;
         if (type == '#') {
@@ -27,6 +28,7 @@ public class Place{
             this.place = place.place;
         }
     }
+
     public void setType(Character type) {
         this.type = type;
     }

@@ -17,18 +17,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ConversionTests {
     @Autowired
     ConversionService conversionService;
+
     @Test
     void stringToLocalDate() {
         LocalDate localDate = conversionService.convert("2004-01-12", LocalDate.class);
         LocalDate localDate1 = LocalDate.parse("2004-01-12");
         assertTrue(localDate.isEqual(localDate1));
     }
+
     @Test
     void stringTo() {
         Duration duration = conversionService.convert("08:30", Duration.class);
         Duration actualDuration = Duration.between(LocalTime.MIN, LocalTime.parse("08:30"));
         assertThat(duration).isEqualByComparingTo(actualDuration);
     }
+
     @Test
     void stringToLocalTime() {
         LocalTime localTime = conversionService.convert("08:30", LocalTime.class);

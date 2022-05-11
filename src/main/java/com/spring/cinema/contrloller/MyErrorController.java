@@ -20,7 +20,7 @@ public class MyErrorController implements ErrorController {
 
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
-            if(statusCode == HttpStatus.NOT_FOUND.value()) {
+            if (statusCode == HttpStatus.NOT_FOUND.value()) {
                 model.addAttribute("massage", "Page_not_found");
                 model.addAttribute("error", "404");
                 return "error";

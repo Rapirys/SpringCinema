@@ -13,13 +13,13 @@ import java.util.Objects;
 @Table(name = "orders", indexes = @Index(name = "order_index", columnList = "session_id"))
 public class Order {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long order_id;
     @ManyToOne
     User user;
 
     @OneToMany(mappedBy = "ticket_id", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ticket> tickets =new ArrayList<>();
+    private List<Ticket> tickets = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "session_id")
@@ -27,7 +27,6 @@ public class Order {
     private Session session;
     private LocalDateTime time;
     private boolean active;
-
 
 
     @Override
@@ -90,6 +89,7 @@ public class Order {
         this.active = active;
         return this;
     }
+
     public User getUser() {
         return user;
     }

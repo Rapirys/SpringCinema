@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
 /**
- Used for easy access to cookies,
- must be called from the controller or request scope.
+ * Used for easy access to cookies,
+ * must be called from the controller or request scope.
  */
 @Service
 @RequestScope
@@ -26,8 +26,8 @@ public class CookieManager {
     @Autowired
     LocaleResolver localeResolver;
 
-    public String findCookiesByName(String name){
-        String cook=null;
+    public String findCookiesByName(String name) {
+        String cook = null;
         for (Cookie cookie : request.getCookies()) {
             if (cookie.getName().equals(name))
                 cook = cookie.getValue();
@@ -35,7 +35,7 @@ public class CookieManager {
         return cook;
     }
 
-    public void changLang(){
+    public void changLang() {
         String lang = findCookiesByName("lang");
         if (lang == null)
             lang = "ru";
@@ -43,7 +43,7 @@ public class CookieManager {
             lang = "ru";
         else if (lang.equals("ru"))
             lang = "en";
-        localeResolver.setLocale(request,response, new Locale(lang));
+        localeResolver.setLocale(request, response, new Locale(lang));
     }
 
 

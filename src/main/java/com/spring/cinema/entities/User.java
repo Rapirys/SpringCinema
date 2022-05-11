@@ -11,13 +11,13 @@ import java.util.Set;
 @Entity(name = "usr")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @Column (unique = true)
+    @Column(unique = true)
     private String username;
-    @Column (unique = true)
+    @Column(unique = true)
     private String email;
-    private boolean active=true;
+    private boolean active = true;
     String password;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -68,7 +68,8 @@ public class User implements UserDetails {
     }
 
     public User setUsername(String name) {
-        this.username = name; return this;
+        this.username = name;
+        return this;
     }
 
     public String getEmail() {
@@ -76,7 +77,8 @@ public class User implements UserDetails {
     }
 
     public User setEmail(String email) {
-        this.email = email; return this;
+        this.email = email;
+        return this;
     }
 
     public boolean isActive() {

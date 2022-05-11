@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class MvcConfigTest {
     @Autowired
     JdbcTemplate jdbcTemplate;
+
     @Test
     void init() {
         boolean f = jdbcTemplate.queryForObject("SELECT EXISTS (select * from pg_proc where proname = 'findhall')", Boolean.class);
